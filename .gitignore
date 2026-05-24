@@ -1,0 +1,6 @@
+*.iml
+*.log
+*.tmp
+*.temp
+*.cache
+**/out/
