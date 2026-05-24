@@ -1,0 +1,203 @@
+﻿<!-- 根据精灵图鉴收集的完成程度送道具或者精灵 -->
+<!-- DoneCount 表示已经收集齐的精灵的种类的数目 -->
+<!-- ID 物品的ID号或者精灵的ID号 -->
+<!-- LV精灵的等级 -->
+<!-- Flag为1,表示送的是精灵，其他采用默认值0 -->
+<!-- OnlyFlagIndex 表示检查唯一标识的哪一位 -->
+<!-- NumLevel精灵的种类等级要达到多少级 -->
+<!-- NumCount多少个精灵的种类-->
+<MonHandBook>
+	<HandBook Index = "35" type="1" SuitID="266" SuitName="光翼红魔" SuitVec="100729 100730 100731 100732 100733" PetNumID= "390 417 371" PetIcon= "690 723 669" OnlyFlagIndex = "772" >
+		<Item ID = "100729" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "36" type="1" SuitID="266"  SuitName="光翼红魔" SuitVec="100729 100730 100731 100732 100733" PetNumID= "407 330 399" PetIcon= "710 611 699" OnlyFlagIndex = "773" >
+		<Item ID = "100730" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "37" type="1" SuitID="266"  SuitName="光翼红魔" SuitVec="100729 100730 100731 100732 100733" PetNumID= "406 324 488" PetIcon= "706 604 831" OnlyFlagIndex = "774" >
+		<Item ID = "100731" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "38" type="1" SuitID="266"  SuitName="光翼红魔" SuitVec="100729 100730 100731 100732 100733" PetNumID= "388 332 493" PetIcon= "688 614 841" OnlyFlagIndex = "775" >
+		<Item ID = "100732" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "39" type="1" SuitID="266"  SuitName="光翼红魔" SuitVec="100729 100730 100731 100732 100733" PetNumID= "398 373 489" PetIcon= "698 672 833" OnlyFlagIndex = "776" >
+		<Item ID = "100733" Count = "1"/>
+	</HandBook>
+	
+	<HandBook Index = "1" type="1" SuitID="1" SuitName="训练师套装" SuitVec="100065 100066 100067 100068 100069" PetNumID= "4 5 7" PetIcon= "10 13 18" OnlyFlagIndex = "1" >
+		<Item ID = "100065" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "2" type="1" SuitID="1"  SuitName="训练师套装" SuitVec="100065 100066 100067 100068 100069" PetNumID= "8 9 10" PetIcon= "20 22 25" OnlyFlagIndex = "2" >
+		<Item ID = "100066" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "3" type="1" SuitID="1"  SuitName="训练师套装" SuitVec="100065 100066 100067 100068 100069" PetNumID= "11 6 17" PetIcon= "28 16 41" OnlyFlagIndex = "3" >
+		<Item ID = "100067" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "4" type="1" SuitID="1"  SuitName="训练师套装" SuitVec="100065 100066 100067 100068 100069" PetNumID= "14 16 12" PetIcon= "34 39 30" OnlyFlagIndex = "4" >
+		<Item ID = "100068" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "5" type="1" SuitID="1"  SuitName="训练师套装" SuitVec="100065 100066 100067 100068 100069" PetNumID= "13 18 19" PetIcon= "32 43 46" OnlyFlagIndex = "5" >
+		<Item ID = "100069" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "6" type="2" InitMonLevel="60" NumID="3" DoneCount="20" OnlyFlagIndex = "98" >
+		<Item ID = "1" Level = "5" Flag = "1"/>
+	</HandBook>
+	<HandBook Index = "7" type="2" InitMonLevel="60" NumID="1" DoneCount="20" OnlyFlagIndex = "98" >
+		<Item ID = "4" Level = "5" Flag = "1"/>
+	</HandBook>
+	<HandBook Index = "8" type="2" InitMonLevel="60" NumID="2" DoneCount="20" OnlyFlagIndex = "98" >
+		<Item ID = "7" Level = "5" Flag = "1"/>
+	</HandBook>
+	
+	<HandBook Index = "9" type="3" NumLevel="30" NumCount="2" OnlyFlagIndex = "177" tip="">
+		<Item ID = "200001" Count = "2"/>
+		<Item ID = "200012" Count = "2"/>
+		<Item ID = "200213" Count = "2"/>
+		<Item ID = "100128" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "10" type="3" NumLevel="40" NumCount="4" OnlyFlagIndex = "178" tip="">
+		<Item ID = "200002" Count = "4"/>
+		<Item ID = "200013" Count = "4"/>
+		<Item ID = "200213" Count = "4"/>
+		<Item ID = "100129" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "11" type="3" NumLevel="50" NumCount="6" OnlyFlagIndex = "181" tip="">
+		<Item ID = "200003" Count = "4"/>
+		<Item ID = "200013" Count = "4"/>
+		<Item ID = "200214" Count = "4"/>
+		<Item ID = "100130" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "12" type="3" NumLevel="60" NumCount="8" OnlyFlagIndex = "183" tip="">
+		<Item ID = "200003" Count = "6"/>
+		<Item ID = "200013" Count = "6"/>
+		<Item ID = "200214" Count = "6"/>
+		<Item ID = "100131" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "13" type="3" NumLevel="70" NumCount="10" OnlyFlagIndex = "210" tip="">
+		<Item ID = "200003" Count = "8"/>
+		<Item ID = "200013" Count = "8"/>
+		<Item ID = "200214" Count = "8"/>
+		<Item ID = "100158" Count = "1"/>
+		<Item ID = "100159" Count = "1"/>
+		<Item ID = "100160" Count = "1"/>
+		<Item ID = "100161" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "14" type="3" NumLevel="80" NumCount="8" OnlyFlagIndex = "267" tip="">
+		<Item ID = "200003" Count = "10"/>
+		<Item ID = "200013" Count = "10"/>
+		<Item ID = "200214" Count = "10"/>
+		<Item ID = "100192" Count = "1"/>
+		<Item ID = "100193" Count = "1"/>
+		<Item ID = "100194" Count = "1"/>
+		<Item ID = "100195" Count = "1"/>
+		<Item ID = "100196" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "15" type="3" NumLevel="90" NumCount="7" OnlyFlagIndex = "360" tip="">
+		<Item ID = "200003" Count = "10"/>
+		<Item ID = "200013" Count = "10"/>
+		<Item ID = "200214" Count = "10"/>
+		<Item ID = "200225" Count = "2"/>
+	</HandBook>
+	<HandBook Index = "16" type="3" NumLevel="100" NumCount="6" OnlyFlagIndex = "361" tip="">
+		<Item ID = "200003" Count = "10"/>
+		<Item ID = "200013" Count = "10"/>
+		<Item ID = "200214" Count = "10"/>
+		<Item ID = "200225" Count = "4"/>
+    </HandBook>
+    <HandBook Index = "40" type="3" NumLevel="100" NumCount="10" OnlyFlagIndex = "777" tip="">
+		<Item ID = "200013" Count = "10"/>
+		<Item ID = "200215" Count = "10"/>
+		<Item ID = "604148" Count = "1"/>
+		<Item ID = "200225" Count = "8"/>
+    </HandBook>
+    <HandBook Index = "41" type="3" NumLevel="100" NumCount="20" OnlyFlagIndex = "778" tip="">
+		<Item ID = "200013" Count = "10"/>
+		<Item ID = "200215" Count = "10"/>
+		<Item ID = "604146" Count = "1"/>
+		<Item ID = "200225" Count = "8"/>
+    </HandBook>
+
+	<HandBook Index = "17" type="4" OnlyFlagIndex = "182" FunIndex = "1" NumID="2" secondPetID="7">
+		<Item ID = "1" Level = "5" Flag = "1"/>
+	</HandBook>
+	<HandBook Index = "18" type="4" OnlyFlagIndex = "182" FunIndex = "1" NumID="3" secondPetID="1">
+		<Item ID = "4" Level = "5" Flag = "1"/>
+	</HandBook>
+	<HandBook Index = "19" type="4" OnlyFlagIndex = "182" FunIndex = "1" NumID="1" secondPetID="4">
+		<Item ID = "7" Level = "5" Flag = "1"/>
+	</HandBook>
+	
+	<HandBook Index = "20" type="1" SuitID="2" SuitName="星星队长" SuitVec="100132 100133 100134 100135 100136" PetNumID= "20 21 22" PetIcon= "49 51 53" OnlyFlagIndex = "200" >
+		<Item ID = "100132" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "21" type="1" SuitID="2"  SuitName="星星队长" SuitVec="100132 100133 100134 100135 100136" PetNumID= "23 24 25" PetIcon= "55 58 61" OnlyFlagIndex = "201" >
+		<Item ID = "100133" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "22" type="1" SuitID="2"  SuitName="星星队长" SuitVec="100132 100133 100134 100135 100136" PetNumID= "26 27 28" PetIcon= "63 65 67" OnlyFlagIndex = "202" >
+		<Item ID = "100134" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "23" type="1" SuitID="2"  SuitName="星星队长" SuitVec="100132 100133 100134 100135 100136" PetNumID= "29 30 31" PetIcon= "70 72 74" OnlyFlagIndex = "203" >
+		<Item ID = "100135" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "24" type="1" SuitID="2"  SuitName="星星队长" SuitVec="100132 100133 100134 100135 100136" PetNumID= "32 33 34" PetIcon= "77 79 81" OnlyFlagIndex = "204" >
+		<Item ID = "100136" Count = "1"/>
+	</HandBook>
+	
+	<HandBook Index = "25" type="1" SuitID="3" SuitName="雷昂套装" SuitVec="100274 100275 100276 100277 100278" PetNumID= "35 36 37" PetIcon= "83 86 88" OnlyFlagIndex = "366" >
+		<Item ID = "100274" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "26" type="1" SuitID="3"  SuitName="雷昂套装" SuitVec="100274 100275 100276 100277 100278" PetNumID= "58 59 60" PetIcon= "111 113 115" OnlyFlagIndex = "367" >
+		<Item ID = "100275" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "27" type="1" SuitID="3"  SuitName="雷昂套装" SuitVec="100274 100275 100276 100277 100278" PetNumID= "62 63 64" PetIcon= "119 122 124" OnlyFlagIndex = "368" >
+		<Item ID = "100276" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "28" type="1" SuitID="3"  SuitName="雷昂套装" SuitVec="100274 100275 100276 100277 100278" PetNumID= "66 67 69" PetIcon= "128 130 135" OnlyFlagIndex = "369" >
+		<Item ID = "100277" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "29" type="1" SuitID="3"  SuitName="雷昂套装" SuitVec="100274 100275 100276 100277 100278" PetNumID= "70 71 72" PetIcon= "138 140 142" OnlyFlagIndex = "370" >
+		<Item ID = "100278" Count = "1"/>
+	</HandBook>
+
+
+
+	<HandBook Index = "30" type="1" SuitID="4" SuitName="爱国者套装" SuitVec="100801 100802 100803 100804 100805" PetNumID= "139 140 141" PetIcon= "284 286 288" OnlyFlagIndex = "730" >
+		<Item ID = "100801" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "31" type="1" SuitID="4"  SuitName="爱国者套装" SuitVec="100801 100802 100803 100804 100805" PetNumID= "166 167 168" PetIcon= "320 323 326" OnlyFlagIndex = "731" >
+		<Item ID = "100802" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "32" type="1" SuitID="4"  SuitName="爱国者套装" SuitVec="100801 100802 100803 100804 100805" PetNumID= "145 174 178" PetIcon= "296 342 352" OnlyFlagIndex = "732" >
+		<Item ID = "100803" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "33" type="1" SuitID="4"  SuitName="爱国者套装" SuitVec="100801 100802 100803 100804 100805" PetNumID= "126 129 135" PetIcon= "255 262 276" OnlyFlagIndex = "733" >
+		<Item ID = "100804" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "34" type="1" SuitID="4"  SuitName="爱国者套装" SuitVec="100801 100802 100803 100804 100805" PetNumID= "132 137 138" PetIcon= "269 280 282" OnlyFlagIndex = "734" >
+		<Item ID = "100805" Count = "1"/>
+	</HandBook>
+
+
+
+
+
+
+
+
+	<!--送勋章，不需要客户端触发 -->
+	<HandBook Index = "101" DoneCount="10" >
+		<Item ID = "500001" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "102" DoneCount="20" >
+		<Item ID = "500002" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "103" DoneCount="30" >
+		<Item ID = "500003" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "104" DoneCount="40" >
+		<Item ID = "500025" Count = "1"/>
+	</HandBook>
+	<HandBook Index = "105" DoneCount="100" >
+		<Item ID = "500044" Count = "1"/>
+	</HandBook>
+</MonHandBook>
+
