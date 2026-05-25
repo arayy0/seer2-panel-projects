@@ -221,11 +221,11 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
             setPage(_currentPage);
             if(moduleData.query.dataType == 0)
             {
-               _ui["totalCount"].text = String(moduleData.listDataService.storageLength);
+               _ui["totalCount"].text = String(moduleData.listDataService.storageLength) + "/2999";
             }
             else
             {
-               _ui["totalCount"].text = String(moduleData.listDataService.freeLength);
+               _ui["totalCount"].text = String(moduleData.listDataService.freeLength) + "/1000";
             }
          });
       }
