@@ -84,7 +84,7 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
             clearStarLimit();
             resetList();
          });
-         TooltipManager.addCommonTip(this._ui["tips"],"精灵仓库容量为3000");
+         TooltipManager.addCommonTip(this._ui["tips"],"持有精灵数量达到800时就可能会触发吞精灵的bug 请注意控制精灵数量");
       }
       
       private function onClick(e:MouseEvent) : void
@@ -100,7 +100,7 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
                moduleData.query.dataType = 1;
                moduleData.query.filterType = 3;
                TooltipManager.remove(this._ui["tips"]);
-               TooltipManager.addCommonTip(this._ui["tips"],"精灵仓库容量为1000");
+               TooltipManager.addCommonTip(this._ui["tips"],"按精灵获取时间排序 超过1000时之后放生的精灵会直接消失");
                this.resetList();
                break;
             case "storageBtn":
@@ -221,11 +221,11 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
             setPage(_currentPage);
             if(moduleData.query.dataType == 0)
             {
-               _ui["totalCount"].text = String(moduleData.listDataService.storageLength);
+               _ui["totalCount"].text = String(moduleData.listDataService.storageLength) + "/2999";
             }
             else
             {
-               _ui["totalCount"].text = String(moduleData.listDataService.freeLength);
+               _ui["totalCount"].text = String(moduleData.listDataService.freeLength) + "/1000";
             }
          });
       }
