@@ -4,7 +4,7 @@ package com.taomee.seer2.module.app
    import flash.display.SimpleButton;
 
    
-   [Embed(source="/_assets/assets.swf", symbol="com.taomee.seer2.module.app.AssistantFunctionUI")]
+   [Embed(source="/_assets/assets.swf", symbol="AssistantFunctionUI")]
    public dynamic class AssistantFunctionUI extends MovieClip
    {
       public var swap0:SimpleButton;

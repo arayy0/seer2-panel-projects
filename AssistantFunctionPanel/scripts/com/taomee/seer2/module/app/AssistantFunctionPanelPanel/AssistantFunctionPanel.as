@@ -81,7 +81,7 @@ public class AssistantFunctionPanel extends Module
             this._swapList.push(_mainUI["swap" + i]);
          }
          this._sendRound = 0;
-         this._foodTimer = new Timer(500,1);
+         this._foodTimer = new Timer(200,1);
          this._fb0Txt = _mainUI["fb0Txt"];
          this._fb1Txt =_mainUI["fb1Txt"];
          this._fb0Txt.visible = true;
@@ -120,7 +120,7 @@ public class AssistantFunctionPanel extends Module
          this._fb1Txt.addEventListener("focusOut",function (e:*):void{
             if(_fb1Txt.text == "")
             {
-               _fb1Txt.text = "封包(主包)";
+               _fb1Txt.text = "封包(主包,必填,只有一个包的话就填这里)";
             }
          });
       }
@@ -133,7 +133,7 @@ public class AssistantFunctionPanel extends Module
          index = this._swapList.indexOf(evt.currentTarget as SimpleButton);
          if(index == 0)
          {//发送封包
-            if(this._fb1Txt.text != "" && this._fb1Txt.text != "封包(主包)")
+            if(this._fb1Txt.text != "" && this._fb1Txt.text != "封包(主包,必填,只有一个包的话就填这里)")
             {
                if(this._fb0Txt.text != "" && this._fb0Txt.text != "引导包(没有可以不填)")
                {
@@ -444,6 +444,18 @@ public class AssistantFunctionPanel extends Module
       {
          if(this._Times < this._targetTimes)
          {
+            if(this._targetTimes - this._Times > 5)
+            {
+               Connection.removeCommandListener(this._command0,this.Step1Swap1);
+               Connection.removeErrorHandler(this._command0,this.Step1Err1);
+               this._Times += 4;
+               Connection.send(this._command0,this._paramArray0);
+               Connection.send(this._command0,this._paramArray0);
+               Connection.send(this._command0,this._paramArray0);
+               Connection.send(this._command0,this._paramArray0);
+               Connection.addCommandListener(this._command0,this.Step1Swap1);
+               Connection.addErrorHandler(this._command0,this.Step1Err1);
+            }
             this._Times++;
             Connection.send(this._command0,this._paramArray0);
          }

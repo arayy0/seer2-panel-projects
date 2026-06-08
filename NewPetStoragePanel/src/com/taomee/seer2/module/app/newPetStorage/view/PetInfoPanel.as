@@ -105,7 +105,7 @@ import flash.events.MouseEvent;
          for(i = 0; i < 5; )
          {
             this._icon[i] = new StarMagicIcon(0,0);
-            this._icon[i].scaleX = this._icon[i].scaleY = 45 / 60;
+            this._icon[i].scaleX = this._icon[i].scaleY = 1;
             _ui["pet" + i].addChild(this._icon[i]);
             i++;
          }
