@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel {
    import com.taomee.seer2.app.manager.StatisticsManager;
    import com.taomee.seer2.app.pet.data.PetInfo;
    import com.taomee.seer2.core.module.ModuleManager;
@@ -9,43 +8,28 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel
    import com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel.SetQualityPanel;
    import flash.display.Sprite;
    
-   public class PetInfoPanel extends Sprite
-   {
-      
+   public class PetInfoPanel extends Sprite {
       public static const BASE_PANEL:int = 0;
-      
       public static const SET_POTENT_PANEL:int = 1;
-      
       public static const SET_QUALITY_PANEL:int = 2;
-      
       public static const SET_LEVELUP_PANEL:int = 3;
-      
       public static const SET_CHANGEATTR_PANEL:int = 4;
-       
-      
       private var _baseInfoPanel:BaseInfoPanel;
-      
       private var _setPotentionPanel:SetPotentionPanel;
-      
       private var _setQualityPanel:SetQualityPanel;
-      
       private var _curPanel:Sprite;
-      
       private var _petInfo:PetInfo;
-      
       private var _petBagPanel:PetBagPanel;
       
-      public function PetInfoPanel(petBagPanel:PetBagPanel)
-      {
+      public function PetInfoPanel(petBagPanel:PetBagPanel) {
          super();
          this._petBagPanel = petBagPanel;
          this.initSet();
       }
       
-      private function initSet() : void
-      {
+      private function initSet() : void {
          this._baseInfoPanel = new BaseInfoPanel(this);
-         addChild(this._baseInfoPanel);
+         this.addChild(this._baseInfoPanel);
          this._curPanel = this._baseInfoPanel;
          this._setPotentionPanel = new SetPotentionPanel(this);
          this._setQualityPanel = new SetQualityPanel(this,this._petBagPanel);

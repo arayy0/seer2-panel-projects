@@ -6,10 +6,13 @@ import com.taomee.seer2.app.inventory.ItemManager;
 import com.taomee.seer2.app.net.CommandSet;
 import com.taomee.seer2.app.net.Connection;
 import com.taomee.seer2.app.net.parser.Parser_1142;
+import com.taomee.seer2.app.pet.data.PetInfo;
+import com.taomee.seer2.app.pet.data.PetInfoManager;
 import com.taomee.seer2.app.popup.AlertManager;
 import com.taomee.seer2.app.popup.ServerMessager;
 import com.taomee.seer2.app.starMagic.StarInfo;
 import com.taomee.seer2.app.starMagic.StarMagicManager;
+import com.taomee.seer2.app.starMagic.StarMagicIconDisplayer;
 import com.taomee.seer2.app.swap.SwapManager;
 import com.taomee.seer2.core.module.Module;
 import com.taomee.seer2.core.module.ModuleManager;
@@ -34,7 +37,7 @@ public class GetStarMagicPanel extends Module {
 
     private var _starMagicTip:StarMagicTip;
 
-    private var _starIconVec:Vector.<StarMagicIcon>;
+    private var _starIconVec:Vector.<StarMagicIconDisplayer>;
 
     private var _posVec:Vector.<MovieClip>;
 
@@ -68,6 +71,8 @@ public class GetStarMagicPanel extends Module {
 
     private var _purpleSmoneyTime:int;
 
+    private var _has90:Boolean;
+
     public function GetStarMagicPanel()
     {
         super();
@@ -89,7 +94,7 @@ public class GetStarMagicPanel extends Module {
         this._starMagicTip.mouseChildren = false;
         this._starMagicTip.visible = false;
         _mainUI.addChild(this._starMagicTip);
-        this._starIconVec = new Vector.<StarMagicIcon>();
+        this._starIconVec = new Vector.<StarMagicIconDisplayer>();
         this._posVec = new Vector.<MovieClip>();
         this._suoVec = new Vector.<MovieClip>();
         this._getBtnVec = new Vector.<SimpleButton>();
@@ -113,10 +118,11 @@ public class GetStarMagicPanel extends Module {
         i = 0;
         while(i < this.STARNUM)
         {
-            this._starIconVec[i] = new StarMagicIcon(0,0);
+            this._starIconVec[i] = new StarMagicIconDisplayer(0,0);
             this._starIconVec[i].mouseChildren = false;
             _mainUI.addChild(this._starIconVec[i]);
             this._posVec.push(_mainUI["pos" + i]);
+            this._starIconVec[i].scaleX = this._starIconVec[i].scaleY = (this._posVec[i].width / 60);
             i++;
         }
         i = 0;
@@ -168,7 +174,7 @@ public class GetStarMagicPanel extends Module {
                 {
                     return;
                 }
-                info = this._starIconVec[i].getInfo();
+                info = this._starIconVec[i].info;
                 this._starMagicTip.update(info);
                 this._starMagicTip.visible = true;
                 this._starMagicTip.x = mouseX - 10;
@@ -233,6 +239,10 @@ public class GetStarMagicPanel extends Module {
     {
         if(!this.checkStarNum())
         {
+            return;
+        }
+        if(!this._has90) {
+            AlertManager.showAlert("你没有雷伊（id:90）, 不能使用这个功能! 强行使用会导致紫色星魂/紫色星力功能永久失效");
             return;
         }
         if(StarMagicManager.getDepotStarNum() > 0)
@@ -482,6 +492,10 @@ public class GetStarMagicPanel extends Module {
             },null);
             return;
         }
+        if(!this._has90) {
+            AlertManager.showAlert("你没有雷伊（id:90）, 不能使用这个功能! 强行使用会导致紫色星魂/紫色星力功能永久失效");
+            return;
+        }
         this.enableAllBtn(false);
         if(this._purpleSmoneyTime >= 20)
         {
@@ -698,12 +712,32 @@ public class GetStarMagicPanel extends Module {
         });
     }
 
+    private function check90(petInfos:Vector.<PetInfo>):void {
+        var len:uint = petInfos.length;
+        for(var i:int = 0; i < len; ++i) {
+            if (petInfos[i].resourceId == 90) {
+                this._has90 = true;
+                return;
+            }
+        }
+        var bagPetInfos:Vector.<PetInfo> = PetInfoManager.getTotalBagPetInfo();
+        len = bagPetInfos.length;
+        for (i = 0; i < len; ++i) {
+            if (bagPetInfos[i].resourceId == 90) {
+                this._has90 = true;
+                return;
+            }
+        }
+        this._has90 = false;
+    }
+
     override public function show():void
     {
         super.show();
         this.update();
         this.updateStarNum();
         ItemManager._getCoinsMessageSwitch = false;
+        PetInfoManager.getStoragePetInfos(this.check90,true);
     }
 
     override protected function onClose(e:MouseEvent) : void

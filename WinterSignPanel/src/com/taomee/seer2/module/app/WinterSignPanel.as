@@ -163,13 +163,12 @@ package com.taomee.seer2.module.app
                _panel2.setData(data2);
                updateSelect();
                var signNum:int = 0;
-               for(i = 0; i < WinterSignConfig.getDayInfoVec().length; )
+               for(i = 0; i < WinterSignConfig.getDayInfoVec().length; ++i)
                {
                   if(BitUtil.getBit(par.infoVec[0],i))
                   {
                      signNum++;
                   }
-                  i++;
                }
                _signDayNum.text = signNum.toString();
             });

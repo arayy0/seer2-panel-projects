@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.moduleCommon
-{
+package com.taomee.seer2.module.app.moduleCommon {
    import com.taomee.seer2.app.component.IconDisplayer;
    import com.taomee.seer2.app.config.ItemConfig;
    import com.taomee.seer2.app.config.item.EmblemItemDefinition;
@@ -8,40 +7,32 @@ package com.taomee.seer2.module.app.moduleCommon
    import flash.display.Sprite;
    import org.taomee.utils.DisplayUtil;
    
-   public class PetDecorationIcon extends Sprite
-   {
-       
-      
+   public class PetDecorationIcon extends Sprite {
+
       private var _icon:IconDisplayer;
       
-      public function PetDecorationIcon()
-      {
+      public function PetDecorationIcon() {
          super();
          this.initialize();
       }
       
-      private function initialize() : void
-      {
+      private function initialize() : void {
          this.createChildren();
       }
       
-      private function createChildren() : void
-      {
+      private function createChildren() : void {
          this._icon = new IconDisplayer();
          TooltipManager.addCommonTip(this._icon,"");
       }
       
-      public function dispose() : void
-      {
-         if(Boolean(this._icon))
-         {
+      public function dispose() : void {
+         if(Boolean(this._icon)) {
             this._icon.dispose();
             DisplayUtil.removeForParent(this._icon);
          }
       }
       
-      public function set id(id:int) : void
-      {
+      public function set id(id:int) : void {
          var url:String = null;
          var tip:String = null;
          var emblemItemDefinition:EmblemItemDefinition = null;

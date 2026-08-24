@@ -23,7 +23,7 @@ package com.taomee.seer2.module.app
       {
          this._subPanels = [];
          super();
-         _lifecycleType = LifecycleType.NONCE;
+         _lifecycleType = LifecycleType.GLOBAL;
          this._moduleData = new StorageData();
       }
 
