@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel {
    import com.taomee.seer2.app.config.PetConfig;
    import com.taomee.seer2.app.config.skill.PetSkillSettingDefinition;
    import com.taomee.seer2.app.net.CommandSet;
@@ -26,51 +25,38 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel
    import flash.events.MouseEvent;
    import org.taomee.utils.DisplayUtil;
    
-   public class SelectSkillPanel extends Sprite
-   {
-       
-      
+   public class SelectSkillPanel extends Sprite {
       private var _container:MovieClip;
-      
       private var _closeBtn:SimpleButton;
-      
       private var _availableSkillPanel:AvailableSkillPanel;
-      
       private var _candidateSkillPanel:CandidateSkillPanel;
-      
       private var _skillGraspHideSkillPanel:GraspHideSkillPanel;
-      
       private var _loadInfo:ContentInfo;
-      
       private var _skillGraspMC:MovieClip;
-      
       private var _petInfo:PetInfo;
-
       
-      public function SelectSkillPanel()
-      {
+      public function SelectSkillPanel() {
          super();
          this.initSet();
          this.initEvent();
       }
       
-      private function initSet() : void
-      {
+      private function initSet() : void {
          this._container = new SelectSkillUI();
-         addChild(this._container);
+         this.addChild(this._container);
          this._closeBtn = this._container["closeBtn"] as SimpleButton;
          this._availableSkillPanel = new AvailableSkillPanel();
-         addChild(this._availableSkillPanel);
-         this._availableSkillPanel.x = 73;
-         this._availableSkillPanel.y = 33;
+         this.addChild(this._availableSkillPanel);
+         this._availableSkillPanel.x = 0;
+         this._availableSkillPanel.y = 20;
          this._candidateSkillPanel = new CandidateSkillPanel();
-         addChild(this._candidateSkillPanel);
-         this._candidateSkillPanel.x = 48;
-         this._candidateSkillPanel.y = 192;
+         this.addChild(this._candidateSkillPanel);
+         this._candidateSkillPanel.x = 0;
+         this._candidateSkillPanel.y = 165;
          this._skillGraspHideSkillPanel = new GraspHideSkillPanel(this);
-         addChild(this._skillGraspHideSkillPanel);
-         this._skillGraspHideSkillPanel.x = 147;
-         this._skillGraspHideSkillPanel.y = 284;
+         this.addChild(this._skillGraspHideSkillPanel);
+         this._skillGraspHideSkillPanel.x = 0;
+         this._skillGraspHideSkillPanel.y = 310;
       }
       
       private function initEvent() : void

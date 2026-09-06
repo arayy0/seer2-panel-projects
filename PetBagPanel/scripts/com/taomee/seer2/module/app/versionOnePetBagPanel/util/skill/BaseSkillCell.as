@@ -1,71 +1,51 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill {
    import com.taomee.seer2.app.pet.data.HideSkillInfo;
    import com.taomee.seer2.app.pet.data.SkillInfo;
    import com.taomee.seer2.core.ui.toolTip.TooltipManager;
-   import flash.display.MovieClip;
+import com.taomee.seer2.core.utils.DisplayObjectUtil;
+
+import flash.display.MovieClip;
    import flash.display.Sprite;
    import flash.events.Event;
    import flash.events.MouseEvent;
    import flash.text.TextField;
    import flash.text.TextFormat;
    
-   public class BaseSkillCell extends Sprite
-   {
-      
+   public class BaseSkillCell extends Sprite {
       public static const CELL_CLICK:String = "cellClick";
-       
-      
       protected var _container:MovieClip;
-      
-      private var _nameTxt:TextField;
-      
-      private var _powerTxt:TextField;
-      
-      private var _background:MovieClip;
-      
-      private var _skillAnnimation:MovieClip;
-      
-      private var _hideTips:Sprite;
-      
       protected var _skillInfo:SkillInfo;
-      
       protected var _isHide:Boolean;
-      
       protected var _hasLearnSkill:Boolean;
-      
+      private var _nameTxt:TextField;
+      private var _powerTxt:TextField;
+      private var _background:MovieClip;
+      private var _skillAnimation:MovieClip;
+      private var _hideTips:Sprite;
       private var _isSelected:Boolean;
-      
       private var _isInteractive:Boolean;
-      
       private var _wlTxt:TextField;
-      
       private var _nqTxt:TextField;
-      
-      public function BaseSkillCell()
-      {
+
+      public function BaseSkillCell() {
          super();
          this.initialize();
       }
       
-      private function initialize() : void
-      {
+      private function initialize() : void {
          this.createChildren();
          this.initEventListener();
       }
       
-      private function createChildren() : void
-      {
+      private function createChildren() : void {
          this.createContainer();
          this.extractAssets();
       }
       
-      protected function createContainer() : void
-      {
+      protected function createContainer() : void {
       }
       
-      protected function extractAssets() : void
-      {
+      protected function extractAssets() : void {
          this._nameTxt = this._container["nameTxt"];
          this._powerTxt = this._container["powerTxt"];
          this._wlTxt = this._container["wlTxt"];
@@ -73,32 +53,28 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill
          this._hideTips = this._container["hideTips"];
          this._background = this._container["background"];
          this._background.gotoAndStop(1);
-         this._skillAnnimation = this._container["annimation"];
-         this._skillAnnimation.gotoAndStop(1);
+         this._skillAnimation = this._container["animation"];
+         this._skillAnimation.gotoAndStop(1);
+         DisplayObjectUtil.removeFromParent(this._skillAnimation);
          TooltipManager.addSkillTip(this);
       }
       
-      private function initEventListener() : void
-      {
+      private function initEventListener() : void {
          this.mouseChildren = false;
          this.addEventListener("click",this.onMouseClick);
       }
       
-      private function onMouseClick(evt:MouseEvent) : void
-      {
-         if(this._isInteractive)
-         {
-            dispatchEvent(new Event("cellClick"));
+      private function onMouseClick(evt:MouseEvent) : void {
+         if(this._isInteractive) {
+            this.dispatchEvent(new Event("cellClick"));
          }
       }
       
-      public function removeMouseClickEvent() : void
-      {
+      public function removeMouseClickEvent() : void {
          this.removeEventListener("click",this.onMouseClick);
       }
       
-      public function reset() : void
-      {
+      public function reset() : void {
          this.changeTextFormat(this._nameTxt,false);
          this._nameTxt.text = "未习得";
          this._powerTxt.text = "";
@@ -110,28 +86,24 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill
          this._isHide = false;
       }
       
-      public function setSkillCellData(info:SkillInfo, hasLearnSkill:Boolean = false) : void
-      {
+      public function setSkillCellData(info:SkillInfo, hasLearnSkill:Boolean = false) : void {
          this.reset();
          this._skillInfo = info;
          this._hasLearnSkill = hasLearnSkill;
-         if(this._skillInfo != null)
-         {
+         if(this._skillInfo != null) {
             this._isHide = this._skillInfo.isHideSkill;
             this.updateDisplay();
             this.addSkillTips();
          }
-         else
-         {
+         else {
             TooltipManager.setData(this,null);
          }
       }
       
-      protected function updateDisplay() : void
-      {
+      protected function updateDisplay() : void {
          this._hideTips.visible = this._isHide;
-         if(!this._hasLearnSkill)
-         {
+         if(!this._hasLearnSkill) {
+            this.closeInteraction();
             return;
          }
          this.openInteraction();
@@ -145,26 +117,21 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill
          this._nqTxt.text = "怒气:";
       }
       
-      protected function changeTextFormat(target:TextField, isHide:Boolean) : void
-      {
+      protected function changeTextFormat(target:TextField, isHide:Boolean) : void {
          var txtFormat:TextFormat = target.defaultTextFormat;
-         if(isHide)
-         {
+         if(isHide) {
             txtFormat.color = 16777062;
          }
-         else
-         {
+         else {
             txtFormat.color = 5432825;
          }
          target.defaultTextFormat = txtFormat;
       }
       
-      private function addSkillTips() : void
-      {
+      private function addSkillTips() : void {
          var hideSkillInfo:HideSkillInfo = null;
          var tips:String = null;
-         if(this._isHide == true && this._hasLearnSkill == false)
-         {
+         if(this._isHide && !this._hasLearnSkill) {
             hideSkillInfo = new HideSkillInfo(this._skillInfo.id);
             tips = String(hideSkillInfo.tips);
             TooltipManager.setData(this,{
@@ -172,8 +139,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill
                "description":tips
             });
          }
-         else
-         {
+         else {
             TooltipManager.setData(this,{
                "name":this._skillInfo.name,
                "description":this._skillInfo.description
@@ -181,58 +147,49 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill
          }
       }
       
-      protected function openInteraction() : void
-      {
+      protected function openInteraction() : void {
          this.buttonMode = true;
          this._isInteractive = true;
       }
       
-      protected function closeInteraction() : void
-      {
+      protected function closeInteraction() : void {
          this.buttonMode = false;
          this._isInteractive = false;
       }
       
-      public function get skillInfo() : SkillInfo
-      {
+      public function get skillInfo() : SkillInfo {
          return this._skillInfo;
       }
       
-      public function set isSelected(value:Boolean) : void
-      {
+      public function set isSelected(value:Boolean) : void {
          this._isSelected = value;
-         if(this._isSelected)
-         {
+         if(this._isSelected) {
             this._background.gotoAndStop(2);
          }
-         else
-         {
+         else {
             this._background.gotoAndStop(1);
          }
       }
       
-      public function get isSelected() : Boolean
-      {
+      public function get isSelected() : Boolean {
          return this._isSelected;
       }
       
-      public function showReplaceAnnimation() : void
-      {
-         this._skillAnnimation.addEventListener("enterFrame",this.onSkillAnnimationEnter);
-         this._skillAnnimation.gotoAndPlay(1);
+      public function showReplaceAnimation() : void {
+         this._skillAnimation.addEventListener("enterFrame",this.onSkillAnimationEnter);
+         this.addChild(this._skillAnimation);
+         this._skillAnimation.gotoAndPlay(1);
       }
       
-      private function onSkillAnnimationEnter(evt:Event) : void
-      {
-         if(this._skillAnnimation.currentFrame == this._skillAnnimation.totalFrames)
-         {
-            this._skillAnnimation.removeEventListener("enterFrame",this.onSkillAnnimationEnter);
-            this._skillAnnimation.gotoAndStop(1);
+      private function onSkillAnimationEnter(evt:Event) : void {
+         if(this._skillAnimation.currentFrame == this._skillAnimation.totalFrames) {
+            this._skillAnimation.removeEventListener("enterFrame",this.onSkillAnimationEnter);
+            this._skillAnimation.gotoAndStop(1);
+            DisplayObjectUtil.removeFromParent(this._skillAnimation);
          }
       }
       
-      public function get hasLearnSkill() : Boolean
-      {
+      public function get hasLearnSkill() : Boolean {
          return this._hasLearnSkill;
       }
    }

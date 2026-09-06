@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel {
    import com.taomee.seer2.app.config.PetConfig;
    import com.taomee.seer2.app.config.skill.PetSkillSettingDefinition;
    import com.taomee.seer2.app.pet.data.PetInfo;
@@ -14,43 +13,36 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel
    import flash.display.Sprite;
    import flash.events.MouseEvent;
    
-   public class PetSkillPanel extends Sprite
-   {
-       
-      
+   public class PetSkillPanel extends Sprite {
+
       private var _container:MovieClip;
-      
       private var _resetBtn:SimpleButton;
-      
       private var _getedSkillPanel:GetedSkillPanel;
-      
       private var _selectSkillPanel:SelectSkillPanel;
-      
       private var _petInfo:PetInfo;
       
-      public function PetSkillPanel()
-      {
+      public function PetSkillPanel() {
          super();
          this._container = new PetSkillUI();
-         addChild(this._container);
-         this._container.x = 609;
-         this._container.y = 90;
+         this.addChild(this._container);
+         this._container.x = 620;
+         this._container.y = 0;
          this._resetBtn = this._container["resetBtn"];
          SoundEffects.setButton(this._resetBtn);
          this._resetBtn.addEventListener("click",this.onResetBtnClick);
          this._getedSkillPanel = new GetedSkillPanel();
-         addChild(this._getedSkillPanel);
-         this._getedSkillPanel.x = 631;
-         this._getedSkillPanel.y = 140;
+         this.addChild(this._getedSkillPanel);
+         this._getedSkillPanel.x = 620;
+         this._getedSkillPanel.y = 0;
          this._selectSkillPanel = new SelectSkillPanel();
-         this._selectSkillPanel.x = 42;
-         this._selectSkillPanel.y = 62;
+         this._selectSkillPanel.x = 0;
+         this._selectSkillPanel.y = 0;
       }
       
       private function onResetBtnClick(evt:MouseEvent) : void
       {
          this._selectSkillPanel.setData(this._petInfo);
-         addChild(this._selectSkillPanel);
+         this.addChild(this._selectSkillPanel);
       }
       
       private function updateNewGuide() : void

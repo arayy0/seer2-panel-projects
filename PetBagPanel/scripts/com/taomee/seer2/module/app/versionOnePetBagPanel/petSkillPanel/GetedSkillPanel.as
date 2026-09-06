@@ -1,73 +1,58 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel {
    import com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill.BaseSkillCell;
    import com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill.CriticalSkillCell;
    import com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill.NoramlSkillCell;
    
-   public class GetedSkillPanel extends BaseSkillPanel
-   {
-       
+   public class GetedSkillPanel extends BaseSkillPanel {
       
-      public function GetedSkillPanel()
-      {
+      public function GetedSkillPanel() {
          super();
       }
       
-      override protected function createSkillVec() : void
-      {
+      override protected function createSkillVec() : void {
          var cell:BaseSkillCell = null;
          var rowCount:int = 2;
-         var horizontalPadding:int = 135;
-         var verticalPadding:int = 68;
-         _normalSkillCellVec = new Vector.<BaseSkillCell>();
-         var i:int = 0;
-         while(i < 4)
-         {
-            (cell = new NoramlSkillCell()).x = (horizontalPadding + 5) * (i % rowCount);
-            cell.y = (verticalPadding + 15) * (int(i / rowCount));
-            addChild(cell);
+         var horizontalPadding:int = 144;
+         var verticalPadding:int = 84;
+         this._normalSkillCellVec = new Vector.<BaseSkillCell>();
+         for(var i:int = 0; i < 4; ++i) {
+            cell = new NoramlSkillCell();
+            cell.x = horizontalPadding * (i % rowCount) + 22;
+            cell.y = verticalPadding * int(i / rowCount) + 80;
+            this.addChild(cell);
             cell.removeMouseClickEvent();
-            _normalSkillCellVec.push(cell);
-            i++;
+            this._normalSkillCellVec.push(cell);
          }
-         _criticalSkillCell = new CriticalSkillCell();
-         _criticalSkillCell2 = new CriticalSkillCell();
-         _criticalSkillCell2.visible = false;
-         _criticalSkillCell.x = 68;
-         _criticalSkillCell.y = 210;
-         addChild(_criticalSkillCell);
-         _criticalSkillCell.mouseChildren = true;
-         _criticalSkillCell.removeMouseClickEvent();
+         this._criticalSkillCell = new CriticalSkillCell();
+         this._criticalSkillCell2 = new CriticalSkillCell();
+         this._criticalSkillCell2.visible = false;
+         this._criticalSkillCell.x = 94;
+         this._criticalSkillCell.y = 284;
+         this.addChild(this._criticalSkillCell);
+         this._criticalSkillCell.mouseChildren = true;
+         this._criticalSkillCell.removeMouseClickEvent();
       }
       
-      override protected function updateData() : void
-      {
-         updateSkillInfo(_petInfo.skillInfo.skillInfoVec);
+      override protected function updateData() : void {
+         this.updateSkillInfo(this._petInfo.skillInfo.skillInfoVec);
       }
       
-      override protected function updateDisplay() : void
-      {
+      override protected function updateDisplay() : void {
          this.updateSkillVec();
       }
       
-      private function updateSkillVec() : void
-      {
+      private function updateSkillVec() : void {
          var skillCell:BaseSkillCell = null;
-         var i:int = 0;
-         while(i < 4)
-         {
-            skillCell = _normalSkillCellVec[i];
-            if(i < _normalSkillInfoVec.length)
-            {
-               skillCell.setSkillCellData(_normalSkillInfoVec[i],true);
+         for(var i:int = 0; i < 4; ++i) {
+            skillCell = this._normalSkillCellVec[i];
+            if(i < this._normalSkillInfoVec.length) {
+               skillCell.setSkillCellData(this._normalSkillInfoVec[i],true);
             }
-            else
-            {
+            else {
                skillCell.setSkillCellData(null);
             }
-            i++;
          }
-         _criticalSkillCell.setSkillCellData(_criticalSkillInfo,true);
+         this._criticalSkillCell.setSkillCellData(this._criticalSkillInfo,true);
       }
    }
 }

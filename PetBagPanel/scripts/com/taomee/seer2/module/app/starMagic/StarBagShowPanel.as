@@ -8,6 +8,7 @@ package com.taomee.seer2.module.app.starMagic {
    import com.taomee.seer2.app.serverBuffer.ServerBufferManager;
    import com.taomee.seer2.app.starMagic.StarInfo;
    import com.taomee.seer2.app.starMagic.StarMagicManager;
+   import com.taomee.seer2.app.starMagic.StarMagicIconDisplayer;
    import com.taomee.seer2.app.swap.SwapManager;
    import com.taomee.seer2.app.swap.info.SwapInfo;
    import com.taomee.seer2.app.utils.MovieClipUtil;
@@ -16,7 +17,6 @@ package com.taomee.seer2.module.app.starMagic {
    import com.taomee.seer2.core.scene.LayerManager;
    import com.taomee.seer2.core.utils.URLUtil;
    import flash.display.MovieClip;
-   import flash.display.SimpleButton;
    import flash.display.Sprite;
    import flash.events.Event;
    import flash.events.MouseEvent;
@@ -24,7 +24,7 @@ package com.taomee.seer2.module.app.starMagic {
    
    public class StarBagShowPanel extends Sprite {
       private var _mc:MovieClip;
-      private var _icon:Vector.<StarMagicIcon>;
+      private var _icon:Vector.<StarMagicIconDisplayer>;
       private var _starMagicTip:StarMagicTip;
       private var _mc1:MovieClip;
       private var _btnShow:MovieClip;
@@ -91,10 +91,10 @@ package com.taomee.seer2.module.app.starMagic {
          this._btnShow.mouseChildren = false;
          this._btnShow.mouseEnabled = false;
          this._btnShow.visible = false;
-         this._icon = new Vector.<StarMagicIcon>();
+         this._icon = new Vector.<StarMagicIconDisplayer>();
          for(var i:int = 0; i < 5; ++i) {
-            this._icon[i] = new StarMagicIcon(0,0);
-            this._icon[i].x = 5;
+            this._icon[i] = new StarMagicIconDisplayer(0,0);
+            this._icon[i].scaleX = this._icon[i].scaleY = 45 / 60;
             this._mc["pet" + i].addChild(this._icon[i]);
             this._icon[i].addEventListener("mouseOver",this.onMouseOver);
             this._icon[i].addEventListener("mouseOut",this.onMouseOut);
@@ -126,11 +126,11 @@ package com.taomee.seer2.module.app.starMagic {
       
       private function onMouseOver(e:MouseEvent) : void {
          var info:StarInfo = null;
-         if(e.target is StarMagicIcon) {
-            if((e.target as StarMagicIcon).indexId == 0) {
+         if(e.target is StarMagicIconDisplayer) {
+            if((e.target as StarMagicIconDisplayer).indexId == 0) {
                return;
             }
-            info = (e.target as StarMagicIcon).getInfo();
+            info = (e.target as StarMagicIconDisplayer).info;
             this.addTip(info);
          }
       }

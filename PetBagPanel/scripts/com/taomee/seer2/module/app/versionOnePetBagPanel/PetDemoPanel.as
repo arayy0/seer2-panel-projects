@@ -95,39 +95,33 @@ public class PetDemoPanel extends Sprite {
          this._mainUI = new PetDemoUI();
          this._petDemoDisplayer = new PetDemoDisplayer();
          this._petDemoDisplayer.mouseEnabled = true;
-         this._petDemoDisplayer.x = 200;
+         this._petDemoDisplayer.x = 185;
          this._petDemoDisplayer.y = 240;
+         this._realFirstBtn = this._mainUI["realFirstBtn"];
+         this._recoverBtn = this._mainUI["recoverBtn"];
          this._setFirstBtn = this._mainUI["setFirstBtn"];
          this._goFightBtn = this._mainUI["goFightBtn"];
-         this._recoverBtn = this._mainUI["recoverBtn"];
-         this._storageBtn = this._mainUI["storageBtn"];
-         this._trainingBtn = this._mainUI["trainingBtn"];
-         this._sexIcon = this._mainUI["petSexIcon"];
-         DisplayObjectUtil.removeFromParent(this._mainUI["petSexIcon"]);
-         this._realFirstBtn = this._mainUI["realFirst"];
-         TooltipManager.addCommonTip(this._realFirstBtn,"用于设置御风赛场等PVP赛场中的默认首发精灵(只有部分竞技场有效)");
-         this._followBtn = this._mainUI["followBtn"];
          this._putInStorageBtn = this._mainUI["putInStorageBtn"];
+         this._storageBtn = this._mainUI["storageBtn"];
          this._takeBackBtn = this._mainUI["takeBackBtn"];
-         this._nameBack = this._mainUI["nameBack"];
-         DisplayUtil.removeForParent(this._mainUI["nameBack"]);
-         this._nameTxt = this._mainUI["nameTxt"];
-         DisplayObjectUtil.removeFromParent(this._mainUI["nameTxt"]);
-         this._twoMC = this._mainUI["twoMC"];
-         DisplayObjectUtil.removeFromParent(this._mainUI["twoMC"]);
-         TooltipManager.addCommonTip(this._twoMC,"二代精灵");
-         this._skinMC = this._mainUI["skinMC"];
-         DisplayObjectUtil.removeFromParent(this._mainUI["skinMC"]);
-         TooltipManager.addCommonTip(this._skinMC,"正在使用皮肤");
+         this._followBtn = this._mainUI["followBtn"];
          this._petRideBtn = this._mainUI["petRideBtn"];
          this._petRideBackBtn = this._mainUI["petRideBackBtn"];
+         this._trainingBtn = this._mainUI["trainingBtn"];
+
+         this._sexIcon = this._mainUI["petSexIcon"];
+         TooltipManager.addCommonTip(this._realFirstBtn,"用于设置御风赛场等PVP赛场中的默认首发精灵(只有部分竞技场有效)");
+         this._nameBack = this._mainUI["nameBack"];
+         this._nameTxt = this._mainUI["nameTxt"];
+         this._twoMC = this._mainUI["twoMC"];
+         TooltipManager.addCommonTip(this._twoMC,"二代精灵");
+         this._skinMC = this._mainUI["skinMC"];
+         TooltipManager.addCommonTip(this._skinMC,"正在使用皮肤");
          this._petRideIcon = this._mainUI["petRideIcon"];
          this._petRideIcon.gotoAndStop(1);
-         DisplayObjectUtil.removeFromParent(this._mainUI["petRideIcon"]);
          this._tipArea = this._mainUI["tipArea"];
          this._tipArea.buttonMode = true;
          this._petFetterMC = this._mainUI["fetterMC"];
-         DisplayObjectUtil.removeFromParent(this._mainUI["fetterMC"]);
          this._petTipUI = new PetTipUI();
          this._changPetBtn = this._mainUI["changPetBtn"];
          this._skinBtn = this._mainUI["skinBtn"];
@@ -138,19 +132,27 @@ public class PetDemoPanel extends Sprite {
          this._petRideBackBtn.visible = false;
          this._addHpAnimation = this._mainUI["addHp"];
          this._addHpAnimation.gotoAndStop(1);
-         DisplayObjectUtil.removeFromParent(this._mainUI["addHp"]);
          this._petTypeIcon = new PetTypeIcon();
          this._petTypeIcon.x = this._mainUI["typeArea"].x;
          this._petTypeIcon.y = this._mainUI["typeArea"].y;
-         DisplayObjectUtil.removeFromParent(this._mainUI["typeArea"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["typeArea"]); // 面板里面用了占位符图标，这里应该现去掉再添加正式的图标，下featureArea同理
          this._petTypeIcon.buttonMode = true;
          this._featureIcon = new PetFeatureIcon();
          this._featureIcon.x = this._mainUI["featureArea"].x;
          this._featureIcon.y = this._mainUI["featureArea"].y;
          DisplayObjectUtil.removeFromParent(this._mainUI["featureArea"]);
          this._starLevel = this._mainUI["starLevel"];
-         DisplayObjectUtil.removeFromParent(this._mainUI["starLevel"]);
          this._itemIconList = new Vector.<IconDisplayer>();
+
+         DisplayObjectUtil.removeFromParent(this._mainUI["starLevel"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["addHp"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["fetterMC"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["petRideIcon"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["skinMC"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["twoMC"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["nameTxt"]);
+         DisplayUtil.removeForParent(this._mainUI["nameBack"]);
+         DisplayObjectUtil.removeFromParent(this._mainUI["petSexIcon"]);
          //使用先remove再addChild的方法控制各元件图层。后addChild的图层会更高。此举是为了防止精灵动画过大挡住其他区域/按钮
          this.addChild(this._mainUI);
          this.addChild(this._petDemoDisplayer);
@@ -167,6 +169,7 @@ public class PetDemoPanel extends Sprite {
          this.addChild(this._starLevel);
          this._starList = new Vector.<MovieClip>();
          for (var i:int = 0; i < 4; ++i) {
+            // 这个是神魔化的登记图标
             this._starList.push(this.mainUI["star" + i]);
             DisplayUtil.removeForParent(this._mainUI["star" + i]);
             this._starList[i].visible = false;
@@ -656,117 +659,91 @@ public class PetDemoPanel extends Sprite {
          this.updateDisplay();
       }
       
-      public function updateDisplay() : void
-      {
+      public function updateDisplay() : void {
          var skinName:String = null;
          var i:int = 0;
          var starNum:* = 0;
-         if(this._petInfo == null)
-         {
+         if(this._petInfo == null) {
             return;
          }
-         if(this._showPetDefinition == null)
-         {
+         if(this._showPetDefinition == null) {
             return;
          }
          this.funBtnsChange();
-         if(PetRideShopConfig.isCanRidePet(this._petInfo.resourceId))
-         {
+         if(PetRideShopConfig.isCanRidePet(this._petInfo.resourceId)) {
             this._petRideIcon.visible = true;
-            if(this._petInfo.petRideChipId == 0)
-            {
+            if(this._petInfo.petRideChipId == 0) {
                this._petRideIcon.gotoAndStop(1);
-               if(!this._petRideIcon.hasEventListener("click"))
-               {
+               if(!this._petRideIcon.hasEventListener("click")) {
                   this._petRideIcon.addEventListener("click",this.onPetRideIcon);
                }
             }
-            else
-            {
+            else {
                this._petRideIcon.visible = true;
                this._petRideIcon.gotoAndStop(2);
             }
          }
-         else
-         {
+         else {
             this._petRideIcon.visible = false;
          }
-         if(this._petInfo.evolveLevel != 0)
-         {
+         if(this._petInfo.evolveLevel != 0) {
             starNum = uint(PetEvolveConfig.getStarNum(this._petInfo.evolveLevel));
             i = 0;
-            while(i < 4)
-            {
+            while(i < 4) {
                this._starList[i].visible = true;
-               if(i < starNum)
-               {
-                  if(this._petInfo.evolveLevel <= 4)
-                  {
+               if(i < starNum) {
+                  if(this._petInfo.evolveLevel <= 4) {
                      this._starList[i].gotoAndStop(2);
                   }
-                  else if(this._petInfo.evolveLevel <= 8)
-                  {
+                  else if(this._petInfo.evolveLevel <= 8) {
                      this._starList[i].gotoAndStop(4);
                   }
-                  else if(this._petInfo.evolveLevel <= 1004)
-                  {
+                  else if(this._petInfo.evolveLevel <= 1004) {
                      this._starList[i].gotoAndStop(6);
                   }
-                  else
-                  {
+                  else {
                      this._starList[i].gotoAndStop(8);
                   }
                }
-               else if(this._petInfo.evolveLevel <= 4)
-               {
+               else if(this._petInfo.evolveLevel <= 4) {
                   this._starList[i].gotoAndStop(1);
                }
-               else if(this._petInfo.evolveLevel <= 8)
-               {
+               else if(this._petInfo.evolveLevel <= 8) {
                   this._starList[i].gotoAndStop(3);
                }
-               else if(this._petInfo.evolveLevel <= 1004)
-               {
+               else if(this._petInfo.evolveLevel <= 1004) {
                   this._starList[i].gotoAndStop(5);
                }
-               else
-               {
+               else {
                   this._starList[i].gotoAndStop(7);
                }
                i++;
             }
             this.mainUI.evolveShadeMc.visible = true;
-            if(this._petInfo.evolveLevel <= 4)
-            {
+            if(this._petInfo.evolveLevel <= 4) {
                this.mainUI.evolveShadeMc.gotoAndStop(1);
             }
-            else if(this._petInfo.evolveLevel <= 8)
-            {
+            else if(this._petInfo.evolveLevel <= 8) {
                this.mainUI.evolveShadeMc.gotoAndStop(2);
             }
-            else if(this._petInfo.evolveLevel <= 1004)
-            {
+            else if(this._petInfo.evolveLevel <= 1004) {
                this.mainUI.evolveShadeMc.gotoAndStop(3);
             }
-            else
-            {
+            else {
                this.mainUI.evolveShadeMc.gotoAndStop(4);
             }
          }
-         else
-         {
+         else {
             this.mainUI.evolveShadeMc.visible = false;
             i = 0;
-            while(i < 4)
-            {
+            while(i < 4) {
                this._starList[i].visible = false;
                this._starList[i].gotoAndStop(1);
                i++;
             }
          }
          this._nameTxt.text = this._showPetDefinition.name;
-         if(PetSkinConfig.getSkinId(this._showPetDefinition.resId) && PetSkinConfig.getSkinId(this._showPetDefinition.resId) != this._showPetDefinition.resId)
-         {
+         if(PetSkinConfig.getSkinId(this._showPetDefinition.resId) && PetSkinConfig.getSkinId(this._showPetDefinition.resId) != this._showPetDefinition.resId) {
             /*skinName = String(PetSkinDefineConfig.getSkinName(this._showPetDefinition.resId,uint(PetSkinConfig.getSkinId(this._showPetDefinition.resId))));
             if(skinName != "未知" && skinName != "")
             {
@@ -779,12 +756,10 @@ public class PetDemoPanel extends Sprite {
          TooltipManager.addCommonTip(this._petTypeIcon,PetTypeNameMap.getTypeName(this._showPetDefinition.type));
          this._sexIcon.gotoAndStop(this._petInfo.sex + 1);
          TooltipManager.addCommonTip(this._sexIcon,PetTypeNameMap.getPetSex(this._petInfo.sex));
-         if(this._petInfo.isInStorageBag)
-         {
+         if(this._petInfo.isInStorageBag) {
             this.funBtnsChange();
          }
-         else
-         {
+         else {
             this.updateButtonStatus();
          }
          var petDefinition:PetDefinition = this._showPetDefinition;
@@ -792,23 +767,19 @@ public class PetDemoPanel extends Sprite {
          this._twoMC.visible = this._petInfo.isTwoPet;
          TooltipManager.remove(this._skinMC);
          this._skinMC.visible = false;
-         if(PetSkinConfig.getSkinId(uint(this._showPetDefinition.resId)) != 0 && PetSkinConfig.getSkinId(uint(this._showPetDefinition.resId)) != this._showPetDefinition.resId)
-         {
+         if(PetSkinConfig.getSkinId(uint(this._showPetDefinition.resId)) != 0 && PetSkinConfig.getSkinId(uint(this._showPetDefinition.resId)) != this._showPetDefinition.resId) {
             this._skinMC.visible = true;
-            if(PetSkinConfig.getSkinId(uint(this._showPetDefinition.resId)) < 10000)
-            {
+            if(PetSkinConfig.getSkinId(uint(this._showPetDefinition.resId)) < 10000) {
                TooltipManager.addCommonTip(this._skinMC,"精灵 " + this._showPetDefinition.name + " 正在使用皮肤 " + skinName);
             }
-            else
-            {
+            else {
                TooltipManager.addCommonTip(this._skinMC,"精灵 " + this._showPetDefinition.name + " 正在使用皮肤 " + skinName);
             }
          }
          this._starLevel.gotoAndStop(this._showPetDefinition.starLevel);
       }
       
-      private function funBtnsChange() : void
-      {
+      private function funBtnsChange() : void {
          DisplayObjectUtil.disableButton(this._setFirstBtn);
          DisplayObjectUtil.disableButton(this._trainingBtn);
          DisplayObjectUtil.disableButton(this._followBtn);
@@ -819,13 +790,11 @@ public class PetDemoPanel extends Sprite {
          DisplayObjectUtil.enableButton(this._goFightBtn);
       }
       
-      public function get petInfo() : PetInfo
-      {
+      public function get petInfo() : PetInfo {
          return this._petInfo;
       }
       
-      public function reset() : void
-      {
+      public function reset() : void {
          this._nameTxt.text = "";
          this._sexIcon.gotoAndStop(1);
          this._addHpAnimation.visible = false;
@@ -833,47 +802,39 @@ public class PetDemoPanel extends Sprite {
          this.disableAllButton();
       }
       
-      public function updateButtonStatus() : void
-      {
+      public function updateButtonStatus() : void {
          this.enabledAllButton();
          DisplayObjectUtil.disableButton(this._goFightBtn);
-         if(this._petInfo.isFollowing)
-         {
+         if(this._petInfo.isFollowing) {
             this._followBtn.visible = false;
             this._takeBackBtn.visible = true;
             DisplayObjectUtil.enableButton(this._takeBackBtn);
          }
-         else
-         {
+         else {
             this._followBtn.visible = true;
             this._takeBackBtn.visible = false;
             DisplayObjectUtil.enableButton(this._followBtn);
          }
-         if(this._petInfo.isStarting)
-         {
+         if(this._petInfo.isStarting) {
             DisplayObjectUtil.disableButton(this._setFirstBtn);
          }
-         if(this._petInfo.isPetRiding)
-         {
+         if(this._petInfo.isPetRiding) {
             this._petRideBtn.filters = [];
             this._petRideBackBtn.visible = true;
             this._petRideBtn.visible = false;
             DisplayObjectUtil.enableButton(this._petRideBackBtn);
          }
-         else if(this._petInfo.petRideChipId != 0)
-         {
+         else if(this._petInfo.petRideChipId != 0) {
             this._petRideBackBtn.visible = false;
             this._petRideBtn.visible = true;
             DisplayObjectUtil.enableButton(this._petRideBtn);
          }
-         else if(PetRideShopConfig.isCanRidePet(this._petInfo.resourceId))
-         {
+         else if(PetRideShopConfig.isCanRidePet(this._petInfo.resourceId)) {
             this._petRideBackBtn.visible = false;
             this._petRideBtn.visible = true;
             ColorFilter.setGrayscale(this._petRideBtn);
          }
-         else
-         {
+         else {
             this._petRideBackBtn.visible = false;
             this._petRideBtn.visible = true;
             DisplayObjectUtil.disableButton(this._petRideBtn);

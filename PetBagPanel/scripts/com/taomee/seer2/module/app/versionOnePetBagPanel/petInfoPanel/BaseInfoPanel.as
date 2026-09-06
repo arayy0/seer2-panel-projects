@@ -221,8 +221,8 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
                this._embed_2.visible = false;
                this._decorationIcon.visible = true;
                this._decorationIcon.id = this._petInfo.decorationId;
-               this._decorationIcon.x = this._embed_2.x - 6;
-               this._decorationIcon.y = this._embed_2.y - 6;
+               this._decorationIcon.x = this._embed_2.x - 1.5;
+               this._decorationIcon.y = this._embed_2.y - 1.5;
             }
          }
          else {
@@ -243,8 +243,8 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
             this._embed_1.visible = false;
             this._emblemIcon.id = this._petInfo.emblemId;
             this._emblemIcon.visible = true;
-            this._emblemIcon.x = this._embed_1.x - 6;
-            this._emblemIcon.y = this._embed_1.y - 6;
+            this._emblemIcon.x = this._embed_1.x - 1.5;
+            this._emblemIcon.y = this._embed_1.y - 1.5;
          }
          TooltipManager.changeTip(this._level,"当前资质:" + (this._petInfo.potentialAtk + this._petInfo.potentialDef + this._petInfo.potentialSpAtk + this._petInfo.potentialSpDef + this._petInfo.potentialSpeed + this._petInfo.potentialHp).toString());
          this._level.gotoAndStop(PetInfoManager.getQualityLevel(this._petInfo.potentialAtk + this._petInfo.potentialDef + this._petInfo.potentialSpAtk + this._petInfo.potentialSpDef + this._petInfo.potentialSpeed + this._petInfo.potentialHp) + 1);

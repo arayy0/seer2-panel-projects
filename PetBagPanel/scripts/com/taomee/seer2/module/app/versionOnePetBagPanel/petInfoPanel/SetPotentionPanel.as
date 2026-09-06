@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
    import com.taomee.seer2.app.config.PetConfig;
    import com.taomee.seer2.app.event.LogicEvent;
    import com.taomee.seer2.app.guide.manager.GuideManager;
@@ -23,81 +22,47 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
    import flash.geom.Rectangle;
    import flash.text.TextField;
    
-   public class SetPotentionPanel extends Sprite
-   {
-       
-      
+   public class SetPotentionPanel extends Sprite {
       private var _mainUI:MovieClip;
-      
       private var _onClose:SimpleButton;
-      
       private var _introduceTxt:TextField;
-      
       private var _barList:Vector.<MovieClip>;
-      
       private var _reduceBtnList:Vector.<SimpleButton>;
-      
       private var _addBtnList:Vector.<SimpleButton>;
-      
       private var _valTxtList:Vector.<TextField>;
-      
       private var _leftPointTxt:TextField;
-      
       private var _setBtn:SimpleButton;
-      
       private var _sureBtn:SimpleButton;
-      
       private var _setPropUIList:Vector.<MovieClip>;
-      
       private var _setPropValList:Vector.<TextField>;
-      
       private var _addPointList:Vector.<TextField>;
-      
       private const WHOLE_LEARNING_POINT_MAX:int = 510;
-      
       private const MAX_NUM:int = 6;
-      
       private const CHANGE_VALUE:int = 1;
-      
       private const CHANGE_VALUE_CONTINUOUS:int = 10;
-      
       private const LEARNING_POINT_MAX:int = 255;
-      
       private const DOWN_INTERVAL:int = 200;
-      
       private var _petInfo:PetInfo;
-      
       private var _hasUsedPoint:uint;
-      
       private var _unusedLearningPoint:uint;
-      
       private var _propMaxVal:Vector.<int>;
-      
       private var _propRealVal:Vector.<int>;
-      
       private var _originalAbilityValueVec:Vector.<int>;
-      
       private var _originalLearingPointVec:Vector.<int>;
-      
       private var _changedLearningPointVec:Vector.<int>;
-      
       private var _thisParent:PetInfoPanel;
       
-      public function SetPotentionPanel(thisParent:PetInfoPanel)
-      {
+      public function SetPotentionPanel(thisParent:PetInfoPanel) {
          super();
          this._thisParent = thisParent;
          this.initSet();
          this.initEvent();
       }
       
-      private function initSet() : void
-      {
+      private function initSet() : void {
          var i:int = 0;
          this._mainUI = new SetPotentionUI();
-         addChild(this._mainUI);
-         this._mainUI.x = 760;
-         this._mainUI.y = 20;
+         this.addChild(this._mainUI);
          this._onClose = this._mainUI["onClose"];
          this._introduceTxt = this._mainUI["introduceTxt"];
          this._barList = new Vector.<MovieClip>();
@@ -107,8 +72,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          this._setPropUIList = new Vector.<MovieClip>();
          this._setPropValList = new Vector.<TextField>();
          this._addPointList = new Vector.<TextField>();
-         for(i = 0; i < 6; )
-         {
+         for(i = 0; i < 6; ++i) {
             this._barList.push(this._mainUI["bar" + i]);
             this._reduceBtnList.push(this._mainUI["reduceBtn" + i]);
             this._addBtnList.push(this._mainUI["addBtn" + i]);
@@ -120,7 +84,6 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
             this._setPropValList[i].restrict = "0-9";
             this._setPropValList[i].addEventListener("keyDown",this.onKeyClick);
             this._setPropValList[i].addEventListener("keyUp",this.onKeyClick);
-            i++;
          }
          this._leftPointTxt = this._mainUI["leftPointTxt"];
          this._setBtn = this._mainUI["setBtn"];
@@ -128,8 +91,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          this._sureBtn.visible = false;
       }
       
-      private function onKeyClick(evt:KeyboardEvent) : void
-      {
+      private function onKeyClick(evt:KeyboardEvent) : void {
          var index:int = this._setPropValList.indexOf(evt.currentTarget as TextField);
          if(int(this._setPropValList[index].text) == 0)
          {

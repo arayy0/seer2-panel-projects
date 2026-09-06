@@ -91,10 +91,6 @@ package
       
       public var addPoint3:TextField;
       
-      public var __checkFontName_:String;
-      
-      public var __cacheXMLSettings:Object;
-      
       public function SetPotentionUI()
       {
          super();

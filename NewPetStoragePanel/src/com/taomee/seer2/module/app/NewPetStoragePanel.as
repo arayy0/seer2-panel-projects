@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app
-{
+package com.taomee.seer2.module.app {
    import com.taomee.seer2.app.pet.data.PetInfoManager;
    import com.taomee.seer2.app.serverBuffer.ServerBufferManager;
    import com.taomee.seer2.core.module.ModuleManager;
@@ -11,10 +10,8 @@ package com.taomee.seer2.module.app
    import com.taomee.seer2.core.module.Module;
    import flash.events.MouseEvent;
    
-   public class NewPetStoragePanel extends Module
-   {
-       
-      
+   public class NewPetStoragePanel extends Module {
+
       private var _moduleData:StorageData;
       
       private var _subPanels:Array;
@@ -70,6 +67,17 @@ package com.taomee.seer2.module.app
       {
          this._moduleData.destory();
          super.dispose();
+      }
+
+      override public function show() : void {
+         super.show();
+         this._moduleData = new StorageData();
+         this._moduleData.setData("focus_pet",PetInfoManager.getFirstPetInfo());
+      }
+
+      override public function hide() : void {
+         this._moduleData.destory();
+         super.hide();
       }
    }
 }

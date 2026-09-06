@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel.util
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel.util {
    import com.taomee.seer2.app.component.IconDisplayer;
    import com.taomee.seer2.app.pet.data.PetInfo;
    import com.taomee.seer2.app.popup.AlertManager;
@@ -16,54 +15,31 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util
    import flash.events.MouseEvent;
    import flash.text.TextField;
    
-   public class PetCell extends Sprite
-   {
-      
+   public class PetCell extends Sprite {
       public static const FIRST:String = "first";
-      
       public static const FIGHT:String = "fight";
-      
       public static const SELECT:String = "select";
-       
-      
       private var _mainUI:MovieClip;
-      
       private var _content:Sprite;
-      
       private var _levelTxt:TextField;
-      
       private var _hpBar:Sprite;
-      
+      private var _hpBg:MovieClip;
       private var _hpTxt:TextField;
-      
       private var _levelBackground:Sprite;
-      
       private var _lightMc:MovieClip;
-      
       private var _selector:MovieClip;
-      
       private var _bgCell:Sprite;
-      
       private var _fightStateMC:MovieClip;
-      
       private var _openStateMC:MovieClip;
-      
       private var _icon:IconDisplayer;
-      
       private var _hotArea:Sprite;
-      
       private var _info:PetInfo;
-      
       private var _isBigUI:Boolean;
-      
       private var _fightState:String;
-      
       private var border:MovieClip;
-      
       private var embIcon:PetEmblemIcon;
       
-      public function PetCell(mc:MovieClip, isBigUI:Boolean = false, fightState:String = "select")
-      {
+      public function PetCell(mc:MovieClip, isBigUI:Boolean = false, fightState:String = "select") {
          super();
          this._mainUI = mc;
          this._isBigUI = isBigUI;
@@ -71,32 +47,28 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util
          this.createChildren();
       }
       
-      private function createChildren() : void
-      {
-         addChild(this._mainUI);
+      private function createChildren() : void {
+         this.addChild(this._mainUI);
          this._content = this._mainUI["content"];
          this._levelTxt = this._content["levelTxt"];
          this._hpBar = this._content["HP"];
+         this._hpBg = this._content["hpBar"];
          this._hpTxt = this._content["hpText"];
          this._levelBackground = this._content["levelBg"];
          this._lightMc = this._content["light"];
-         if(Boolean(this._lightMc))
-         {
+         if(Boolean(this._lightMc)) {
             this._lightMc.gotoAndStop(1);
          }
          this._selector = this._content["selector"];
          this._bgCell = this._content["bgCell"];
          this._icon = new IconDisplayer();
-         this._icon.scaleX = this._icon.scaleY = 1.5;
-         if(this._isBigUI)
-         {
+         this._icon.scaleX = this._icon.scaleY = 80/55;
+         if(this._isBigUI) {
             this._icon.x = 25;
             this._icon.y = 30;
          }
-         else
-         {
-            this._icon.x = this._icon.y = -40;
-            this._icon.x = -42;
+         else {
+            this._icon.x = this._icon.y = 1;
          }
          this._content.addChildAt(this._icon,1);
          this._mainUI.mouseChildren = this._mainUI.mouseEnabled = false;
@@ -108,7 +80,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util
          this._content.addChild(this.embIcon);
          this._hotArea = DisplayObjectUtil.createHotArea(this._bgCell.width,this._bgCell.height);
          this._hotArea.buttonMode = true;
-         addChild(this._hotArea);
+         this.addChild(this._hotArea);
          this._hotArea.addEventListener("mouseOver",this.onMouseOver);
          this._hotArea.addEventListener("mouseOut",this.onMouseOut);
          this._fightStateMC = this._mainUI["fightStateMC"];
@@ -242,9 +214,9 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.util
          DisplayObjectUtil.enableSprite(this);
       }
       
-      private function setChildrenVisible(visible:Boolean) : void
-      {
+      private function setChildrenVisible(visible:Boolean) : void {
          this._hpBar.visible = visible;
+         this._hpBg.visible = visible;
          this._levelTxt.visible = visible;
          this._levelBackground.visible = visible;
          this._hpTxt.visible = visible;

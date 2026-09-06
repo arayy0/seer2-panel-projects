@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
    import com.taomee.seer2.app.actor.ActorManager;
    import com.taomee.seer2.app.event.LogicEvent;
    import com.taomee.seer2.app.net.CommandSet;
@@ -28,94 +27,52 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
    import flash.utils.IDataInput;
    import org.taomee.manager.EventManager;
    
-   public class SetQualityPanel extends Sprite
-   {
-       
-      
+   public class SetQualityPanel extends Sprite {
       private var _mainUI:MovieClip;
-      
       private var _onClose:SimpleButton;
-      
       private var _level:MovieClip;
-      
       private var _propList:Vector.<TextField>;
-      
       private var _changePropList:Vector.<TextField>;
-      
       private var _allProp:TextField;
-      
       private var _upLevelNeed:TextField;
-      
       private var _changeVal:TextField;
-      
       private var _coinSelect:MovieClip;
-      
       private var _miSelect:MovieClip;
-      
       private var _itemSelect:MovieClip;
-      
       private var _actcionUI:MovieClip;
-      
       private var _actionSure:SimpleButton;
-      
       private var _actionCancel:SimpleButton;
-      
       private var _coinNumList:Vector.<TextField>;
-      
       private var _sure:SimpleButton;
-      
       private var _swapItem:SimpleButton;
-      
       private const FOR_LIST:Array = [204595];
-      
       private const MI_ID_LIST:Vector.<uint> = Vector.<uint>([604102]);
-      
       private const COST_NUM:Vector.<int> = Vector.<int>([5000,100000,720,10]);
-      
       private const CHANGE_NORMAL:int = 0;
-      
       private const CHANGE_MI:int = 1;
-      
       private const CANCEL:int = 2;
-      
       private const CHANGE_ITEM:int = 3;
-      
       private var _thisParent:PetInfoPanel;
-      
       private var _petBagPanel:PetBagPanel;
-      
       private var _petInfo:PetInfo;
-      
       private var _changePropVal:Vector.<int>;
-      
       private var _changePropAllVal:Vector.<int>;
-      
       private var _changePropAllVal2:Vector.<int>;
-      
       private var _curSelectType:int = -1;
-      
       private var _actionSurePos:Point;
-      
       private var _newQuestMC2:MovieClip;
-      
       private var _newQuestMC3:MovieClip;
-      
       private var _newQuestMC4:MovieClip;
-      
       private var _newQuestMC5:MovieClip;
-      
       private var _newQuestMC6:MovieClip;
-      
       private var _newQuestMC7:MovieClip;
-      
       private var _setTimeout:uint;
-      
       private var _successHandler:Function;
-      
       private var _failHandler:Function;
+      private var _guideUI:MovieClip;
+      private var _superTime:int = 0;
       
-      public function SetQualityPanel(thisParent:PetInfoPanel, petBagPanel:PetBagPanel)
-      {
+      public function SetQualityPanel(thisParent:PetInfoPanel, petBagPanel:PetBagPanel) {
          super();
          this._thisParent = thisParent;
          this._petBagPanel = petBagPanel;
@@ -123,18 +80,15 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          this.initEvent();
       }
       
-      private function initSet() : void
-      {
+      private function initSet() : void {
          this._mainUI = new SetQualityUI();
-         addChild(this._mainUI);
-         this._mainUI.x = 760;
-         this._mainUI.y = -30;
+         this.addChild(this._mainUI);
+         this._guideUI = new SetQualityGuideUI();
          this._onClose = this._mainUI["onClose"];
          this._propList = new Vector.<TextField>();
          this._changePropList = new Vector.<TextField>();
          var i:int = 0;
-         while(i < 6)
-         {
+         while(i < 6) {
             this._propList.push(this._mainUI["prop" + i]);
             this._changePropList.push(this._mainUI["changeProp" + i]);
             i++;
@@ -153,8 +107,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          this._itemSelect.gotoAndStop(1);
          this._coinNumList = new Vector.<TextField>();
          i = 0;
-         while(i < 3)
-         {
+         while(i < 3) {
             this._coinNumList.push(this._mainUI["coinNum" + i]);
             i++;
          }
@@ -171,12 +124,12 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          this._actcionUI.visible = false;
          this._actionSure = this._actcionUI["actionSure"];
          this._actionCancel = this._actcionUI["actionCancel"];
-         this._newQuestMC2 = this._mainUI["newQuestMC2"];
-         this._newQuestMC3 = this._mainUI["newQuestMC3"];
-         this._newQuestMC4 = this._mainUI["newQuestMC4"];
-         this._newQuestMC5 = this._mainUI["newQuestMC5"];
-         this._newQuestMC6 = this._mainUI["newQuestMC6"];
-         this._newQuestMC7 = this._mainUI["newQuestMC7"];
+         this._newQuestMC2 = this._guideUI["newQuestMC2"];
+         this._newQuestMC3 = this._guideUI["newQuestMC3"];
+         this._newQuestMC4 = this._guideUI["newQuestMC4"];
+         this._newQuestMC5 = this._guideUI["newQuestMC5"];
+         this._newQuestMC6 = this._guideUI["newQuestMC6"];
+         this._newQuestMC7 = this._guideUI["newQuestMC7"];
          this._newQuestMC2.visible = false;
          this._newQuestMC3.visible = false;
          this._newQuestMC4.visible = false;
@@ -277,94 +230,34 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
                AlertManager.showAlert("所有资质已满，无法继续洗练");
                return;
             }
-            if(this._curSelectType == 0)
-            {
-               if(ActorManager.actorInfo.coins < this.COST_NUM[0])
-               {
+            if(this._curSelectType == 0) {
+               if(ActorManager.actorInfo.coins < this.COST_NUM[0]) {
                   AlertManager.showAlert("洗练需要5000赛尔豆哦，赛尔豆数量不足！");
                   return;
                }
                this._sure.mouseEnabled = false;
-               this.changeQualitySendServer(0,this._petInfo.catchTime,function(data:IDataInput):void
-               {
-                  var par:Parser_1269 = new Parser_1269(data);
-                  _changePropAllVal = par.changePropList;
-                  updateBaseInfo(par.basePropList);
-                  trace("洗练后随机值:(物攻、物防、特攻、特防、速度、血量)",_changePropAllVal);
-                  update();
-                  if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83))
-                  {
-                     hideAllMC();
-                     _newQuestMC6.visible = true;
-                  }
-                  if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5))
-                  {
-                     hideAllMC();
-                     _newQuestMC6.visible = true;
-                  }
-               },function(code:uint):void
-               {
+               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,function(code:uint):void {
                   _sure.mouseEnabled = true;
                   ErrorMap.parseStatusCode(code);
                });
             }
-            else if(this._curSelectType == 1)
-            {
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,this.sucFunc,null);
-               this.changeQualitySendServer(0,this._petInfo.catchTime,function(data:IDataInput):void
-               {
-                  var par:Parser_1269 = new Parser_1269(data);
-                  _changePropAllVal = par.changePropList;
-                  updateBaseInfo(par.basePropList);
-                  trace("洗练后随机值:(物攻、物防、特攻、特防、速度、血量)",_changePropAllVal);
-                  update();
-                  if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83))
-                  {
-                     hideAllMC();
-                     _newQuestMC6.visible = true;
-                  }
-                  if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5))
-                  {
-                     hideAllMC();
-                     _newQuestMC6.visible = true;
-                  }
-               },function(code:uint):void
-               {
-                  _sure.mouseEnabled = true;
-                  ErrorMap.parseStatusCode(code);
-               });
+            else if(this._curSelectType == 1) {
+               for (var i:int = 0; i < 20; ++i) {
+                  this.sendServerWithTime(0,this._petInfo.catchTime,this.sucFunc,function(code:uint):void {
+                     _sure.mouseEnabled = true;
+                     ErrorMap.parseStatusCode(code);
+                  });
+               }
             }
             else
             {
                this._sure.mouseEnabled = false;
-               this.changeQualitySendServer(3,this._petInfo.catchTime,function(data:IDataInput):void
-               {
+               this.changeQualitySendServer(3,this._petInfo.catchTime,function(data:IDataInput):void {
                   var par:Parser_1269 = new Parser_1269(data);
                   _changePropAllVal = par.changePropList;
                   updateBaseInfo(par.basePropList);
-                  trace("洗练后随机值:(物攻、物防、特攻、特防、速度、血量)",_changePropAllVal);
                   update();
-               },function(code:uint):void
-               {
+               },function(code:uint):void {
                   update();
                   _sure.mouseEnabled = true;
                   ErrorMap.parseStatusCode(code);
@@ -391,29 +284,24 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          EventManager.dispatchEvent(new Event("PetUpdate"));
       }
       
-      private function changeQualitySendServer(type:int, catchTime:uint, successFunc:Function = null, failFunc:Function = null) : void
-      {
+      private function changeQualitySendServer(type:int, catchTime:uint, successFunc:Function = null, failFunc:Function = null) : void {
          this._successHandler = successFunc;
          this._failHandler = failFunc;
          Connection.addCommandListener(CommandSet.CLI_CALC_POTENTIAL_1269,this.onGetSucess);
          Connection.addErrorHandler(CommandSet.CLI_CALC_POTENTIAL_1269,this.onGetError);
          Connection.send(CommandSet.CLI_CALC_POTENTIAL_1269,catchTime,type);
-         trace("洗练发送参数=====cathTime:",catchTime,";类型:",type);
       }
       
-      private function onGetSucess(evt:MessageEvent) : void
-      {
+      private function onGetSucess(evt:MessageEvent) : void {
          var swapInfo:SwapInfo = null;
          Connection.removeCommandListener(CommandSet.CLI_CALC_POTENTIAL_1269,this.onGetSucess);
          Connection.removeErrorHandler(CommandSet.CLI_CALC_POTENTIAL_1269,this.onGetError);
          var data:IDataInput = evt.message.getRawData();
-         if(this._successHandler != null)
-         {
+         if(this._successHandler != null) {
             this._successHandler(data);
-            this._successHandler = null;
+            //this._successHandler = null;
          }
-         else
-         {
+         else {
             swapInfo = new SwapInfo(data);
          }
       }
@@ -494,65 +382,52 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          return str;
       }
       
-      private function onCoinSelect(evt:MouseEvent) : void
-      {
+      private function onCoinSelect(evt:MouseEvent) : void {
          this._miSelect.gotoAndStop(1);
          this._itemSelect.gotoAndStop(1);
-         if(this._coinSelect.currentFrame == 2)
-         {
+         if(this._coinSelect.currentFrame == 2) {
             this._coinSelect.gotoAndStop(1);
             this._curSelectType = -1;
          }
-         else
-         {
+         else {
             this._coinSelect.gotoAndStop(2);
             this._curSelectType = 0;
-            if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83))
-            {
+            if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83)) {
                this.hideAllMC();
-               if(int(this._allProp.text) < this.COST_NUM[2])
-               {
+               if(int(this._allProp.text) < this.COST_NUM[2]) {
                   this._newQuestMC4.visible = true;
                }
             }
-            if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5))
-            {
+            if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5)) {
                this.hideAllMC();
-               if(int(this._allProp.text) < this.COST_NUM[2])
-               {
+               if(int(this._allProp.text) < this.COST_NUM[2]) {
                   this._newQuestMC4.visible = true;
                }
             }
          }
       }
       
-      private function onItemSelect(evt:MouseEvent) : void
-      {
+      private function onItemSelect(evt:MouseEvent) : void {
          this._coinSelect.gotoAndStop(1);
          this._miSelect.gotoAndStop(1);
-         if(this._itemSelect.currentFrame == 2)
-         {
+         if(this._itemSelect.currentFrame == 2) {
             this._itemSelect.gotoAndStop(1);
             this._curSelectType = -1;
          }
-         else
-         {
+         else {
             this._itemSelect.gotoAndStop(2);
             this._curSelectType = 3;
          }
       }
       
-      private function onMiSelect(evt:MouseEvent) : void
-      {
+      private function onMiSelect(evt:MouseEvent) : void {
          this._coinSelect.gotoAndStop(1);
          this._itemSelect.gotoAndStop(1);
-         if(this._miSelect.currentFrame == 2)
-         {
+         if(this._miSelect.currentFrame == 2) {
             this._miSelect.gotoAndStop(1);
             this._curSelectType = -1;
          }
-         else
-         {
+         else {
             this._miSelect.gotoAndStop(2);
             this._curSelectType = 1;
          }
@@ -628,22 +503,37 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel
          this._mainUI["potentialTxt"].text = this._petInfo.potential.toString();
       }
       
-      private function sucFunc(data:IDataInput) : void
-      {
+      private function sucFunc(data:IDataInput) : void {
          var par:Parser_1269 = new Parser_1269(data);
          _changePropAllVal = par.changePropList;
          updateBaseInfo(par.basePropList);
-         trace("洗练后随机值:(物攻、物防、特攻、特防、速度、血量)",_changePropAllVal);
          update();
-         if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83))
-         {
+         if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83)) {
             hideAllMC();
             _newQuestMC6.visible = true;
          }
-         if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5))
-         {
+         if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5)) {
             hideAllMC();
             _newQuestMC6.visible = true;
+         }
+      }
+
+      private function sendServerWithTime(type:int, catchTime:uint, successFunc:Function = null, failFunc:Function = null) : void {
+         this._successHandler = successFunc;
+         this._failHandler = failFunc;
+         Connection.addCommandListener(CommandSet.CLI_CALC_POTENTIAL_1269,this.onGetSuccessWithTime);
+         Connection.send(CommandSet.CLI_CALC_POTENTIAL_1269,catchTime,type);
+      }
+
+      private function onGetSuccessWithTime(evt:MessageEvent) : void {
+         ++this._superTime;
+         if(this._superTime >= 20) {
+            Connection.removeCommandListener(CommandSet.CLI_CALC_POTENTIAL_1269,this.onGetSucess);
+            var data:IDataInput = evt.message.getRawData();
+            if(this._successHandler != null) {
+               this._successHandler(data);
+            }
+            this._superTime = 0;
          }
       }
    }

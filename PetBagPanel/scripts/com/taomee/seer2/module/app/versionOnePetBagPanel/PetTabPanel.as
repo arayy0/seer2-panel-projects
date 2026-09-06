@@ -25,21 +25,22 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel {
       
       private function initialize() : void {
          this._petInfoPanel = new PetInfoPanel(this._bagPanel);
-         this._petInfoPanel.x = 640;
+         this._petInfoPanel.x = 620;
          this._petInfoPanel.y = 40;
          this.addChild(this._petInfoPanel);
          this._currentPanel = this._petInfoPanel;
          this._itemPanel = new PetItemBagPanel(this._bagPanel,this);
-         this._itemPanel.x = 2;
-         this._itemPanel.y = 48;
+         this._itemPanel.x = 620;
+         this._itemPanel.y = 40;
          this._petAbilityPanel = new PetAbilityPanel();
-         this._petAbilityPanel.x = 20;
-         this._petAbilityPanel.y = 15;
+         this._petAbilityPanel.x = 620;
+         this._petAbilityPanel.y = 40;
          this._petSkillPanel = new PetSkillPanel();
-         this._petSkillPanel.y = 10;
+         this._petSkillPanel.x = 0;
+         this._petSkillPanel.y = 40;
          this._magicPanel = new StarBagShowPanel();
-         this._magicPanel.x = 30;
-         this._magicPanel.y = -10;
+         this._magicPanel.x = 620;
+         this._magicPanel.y = 40;
          this._tab = new PanelTab();
          this.addChild(this._tab);
          this._tab.activeTabIndex = 0;
@@ -64,74 +65,60 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel {
             case 4:
                this._currentPanel = this._itemPanel;
          }
-         if(Boolean(this._petInfo))
-         {
+         if(Boolean(this._petInfo)) {
             Object(this._currentPanel).setData(this._petInfo);
          }
-         addChild(this._currentPanel);
-         addChild(this._tab);
+         this.addChild(this._currentPanel);
+         this.addChild(this._tab);
          this.resetFilter();
       }
       
-      private function resetFilter() : void
-      {
-         if(this._currentPanel is PetInfoPanel)
-         {
+      private function resetFilter() : void {
+         if(this._currentPanel is PetInfoPanel) {
             (this._currentPanel as PetInfoPanel).changePanelShow(0);
          }
       }
       
-      public function changeCurPanelTab(type:int, subType:int) : void
-      {
-         if(Boolean(this._currentPanel))
-         {
-            if(type == 0)
-            {
+      public function changeCurPanelTab(type:int, subType:int) : void {
+         if(Boolean(this._currentPanel)) {
+            if(type == 0) {
                (this._currentPanel as PetInfoPanel).changePanelShow(subType);
             }
          }
       }
       
-      public function reset() : void
-      {
+      public function reset() : void {
          DisplayObjectUtil.disableSprite(this);
          this._tab.reset();
          this._itemPanel.keepPage(false);
       }
       
-      public function setData(info:PetInfo) : void
-      {
+      public function setData(info:PetInfo) : void {
          this._petInfo = info;
-         if(Boolean(this._currentPanel))
-         {
+         if(Boolean(this._currentPanel)) {
             Object(this._currentPanel).setData(this._petInfo);
          }
       }
       
-      public function updatePet() : void
-      {
+      public function updatePet() : void {
          this._itemPanel.setData(this._petInfo);
          this._petInfoPanel.setData(this._petInfo);
          this._petSkillPanel.setData(this._petInfo);
          this._petAbilityPanel.setData(this._petInfo);
       }
       
-      public function hideGrasp() : void
-      {
+      public function hideGrasp() : void {
       }
       
-      public function changeTab(index:int) : void
-      {
+      public function changeTab(index:int) : void {
          this._tab.activeTabIndex = index;
       }
       
-      public function resetMouseable() : void
-      {
+      public function resetMouseable() : void {
          DisplayObjectUtil.enableSprite(this);
       }
       
-      public function dispose() : void
-      {
+      public function dispose() : void {
          this._itemPanel.dispose();
       }
    }

@@ -4,7 +4,7 @@ package com.taomee.seer2.module.app.appraisal
    import flash.display.SimpleButton;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="com.taomee.seer2.module.app.appraisal.AppraisalResultPanelUI")]
+   //[Embed(source="/_assets/assets.swf", symbol="com.taomee.seer2.module.app.appraisal.AppraisalResultPanelUI")]
    public dynamic class AppraisalResultPanelUI extends MovieClip
    {
        

@@ -34,11 +34,11 @@ import flash.utils.IDataInput;
       
       public function PetBagPanel() {
          super();
-         _lifecycleType = "global";
+         this._lifecycleType = "global";
       }
       
       override public function setup() : void {
-         setMainUI(new PetBagBgUI());
+         this.setMainUI(new PetBagBgUI());
          this.initSet();
          this.initEvent();
       }
@@ -72,20 +72,21 @@ import flash.utils.IDataInput;
       
       private function initSet() : void {
          this._petDemoPanel = new PetDemoPanel();
-         addChild(this._petDemoPanel);
+         this.addChild(this._petDemoPanel);
          this._petDemoPanel.x = 240;
          this._petDemoPanel.y = 80;
          this._petListPanel = new PetListPanel();
-         addChild(this._petListPanel);
+         this.addChild(this._petListPanel);
          this._petListPanel.x = 0;
          this._petListPanel.y = 40;
          this._petTabPanel = new PetTabPanel(this);
-         addChild(this._petTabPanel);
+         this.addChild(this._petTabPanel);
+         this._petTabPanel.x = 0;
+         this._petTabPanel.y = 0;
          this._dataService = new PetBagDataService();
       }
       
-      private function initEvent() : void
-      {
+      private function initEvent() : void {
          this._petListPanel.addEventListener("petSelected",this.onPetSelected);
          this._petDemoPanel.addEventListener("requestRecover",this.onRequestRecover);
          this._dataService.addEventListener("petAddedHp",this.onPetAddedHp);
@@ -122,7 +123,7 @@ import flash.utils.IDataInput;
       private function onPetSelected(e:PetBagEvent) : void {
          e.stopPropagation();
          this._currPetInfo = e.petInfo;
-         if(this._currPetInfo.level >= 60 && this.getPetHideSkillCount(this._currPetInfo) && this._currPetInfo.resourceId != 91 && this.getPetHideCount(this._currPetInfo) > 0) {
+         if (this._currPetInfo.level >= 60 && this.getPetHideSkillCount(this._currPetInfo) && this._currPetInfo.resourceId != 91 && this.getPetHideCount(this._currPetInfo) > 0) {
             this.checkBuff();
          }
          else {

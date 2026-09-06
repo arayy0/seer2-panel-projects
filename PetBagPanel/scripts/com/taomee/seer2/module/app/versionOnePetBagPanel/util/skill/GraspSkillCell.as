@@ -1,84 +1,70 @@
-package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill
-{
+package com.taomee.seer2.module.app.versionOnePetBagPanel.util.skill {
    import com.taomee.seer2.app.component.PetTypeIcon;
    import com.taomee.seer2.app.inventory.ItemManager;
    import com.taomee.seer2.app.pet.data.PetInfo;
    import com.taomee.seer2.app.pet.data.SkillInfo;
    import flash.display.MovieClip;
-   import flash.events.MouseEvent;
+import flash.display.Sprite;
+import flash.events.MouseEvent;
    import flash.text.TextField;
    import org.taomee.utils.DisplayUtil;
    
-   public class GraspSkillCell extends BaseSkillCell
-   {
-       
-      
+   public class GraspSkillCell extends BaseSkillCell {
       private var _btn:MovieClip;
-      
       private var _petInfo:PetInfo;
-      
       private var _clickBtnFun:Function;
-      
       private var _categoryTxt:TextField;
-      
       private var _typeIcon:PetTypeIcon;
-      
       private var _angerTxt:TextField;
+      private var _parent:Sprite;
       
-      private var _mainUI:MovieClip;
-      
-      public function GraspSkillCell(petInfo:PetInfo, clickBtnFun:Function, mainUI:MovieClip)
-      {
-         this._mainUI = mainUI;
+      public function GraspSkillCell(petInfo:PetInfo, clickBtnFun:Function, parent:Sprite) {
          this._petInfo = petInfo;
          this._clickBtnFun = clickBtnFun;
+         this._parent = parent;
          super();
          this._btn = new GraspSkillGetUI();
-         this._btn.y = 120;
          this._btn.addEventListener("click",this.onBtn);
-         this._mainUI.addChild(this._btn);
+         this._parent.addChild(this._btn);
       }
       
-      public function setBtnX(value:Number) : void
-      {
+      public function setBtnX(value:Number) : void {
          this._btn.x = value;
       }
+
+      public function setBtnY(value:Number) : void {
+         this._btn.y = value;
+      }
       
-      override protected function createContainer() : void
-      {
-         _container = new NormalSkillCellUI();
-         addChild(_container);
+      override protected function createContainer() : void {
+         this._container = new NormalSkillCellUI();
+         this.addChild(_container);
          this.addTypeIcon();
       }
       
-      private function addTypeIcon() : void
-      {
+      private function addTypeIcon() : void {
          this._typeIcon = new PetTypeIcon();
          this._typeIcon.x = 4;
          this._typeIcon.y = 5;
-         addChild(this._typeIcon);
+         this.addChild(this._typeIcon);
       }
       
-      override protected function extractAssets() : void
-      {
+      override protected function extractAssets() : void {
          super.extractAssets();
          this._categoryTxt = _container["categoryTxt"];
          this._angerTxt = _container["angerTxt"];
       }
       
-      override public function reset() : void
-      {
+      override public function reset() : void {
          super.reset();
          this._typeIcon.clear();
          this._angerTxt.text = "";
          this._categoryTxt.text = "";
       }
       
-      override protected function updateDisplay() : void
-      {
+      override protected function updateDisplay() : void {
          super.updateDisplay();
-         if(_hasLearnSkill == true)
-         {
+         if(this._hasLearnSkill) {
             this._categoryTxt.text = _skillInfo.category;
             changeTextFormat(this._angerTxt,_isHide);
             this._angerTxt.text = _skillInfo.anger.toString();
