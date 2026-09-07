@@ -976,10 +976,11 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel {
       
       private function newGuideShow() : void {
          var rect:Rectangle = null;
+         var p:Point = new Point((this._itemContainer.x + this.x + this._bagPanel.x),(this._itemContainer.y + this.y + this._bagPanel.y));
          if(Boolean(QuestManager.isAccepted(99)) && !QuestManager.isStepComplete(99,3) && Boolean(QuestMapHandler_99_80491.isClickQuest99_3)) {
-            rect = new Rectangle(0,0,49,49);
+            rect = new Rectangle(0,0,this._petItemCellVec[0].width,this._petItemCellVec[0].height);
             GuideManager.instance.addTarget(rect,0);
-            GuideManager.instance.addGuide2Target(rect,0,20,new Point(723,217),false,false,9,false,true,false,990,560);
+            GuideManager.instance.addGuide2Target(rect,0,20,p,false,false,9,false,true,false,990,560);
             GuideManager.instance.startGuide(20);
             ModuleManager.addEventListener("BatchPanel","setup",this.onBatchSetup);
             ModuleManager.addEventListener("BatchPanel","dispose",this.onBatchDispose);

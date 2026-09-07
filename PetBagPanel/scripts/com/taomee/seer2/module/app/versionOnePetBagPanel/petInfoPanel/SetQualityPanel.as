@@ -15,7 +15,8 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
    import com.taomee.seer2.core.module.ModuleManager;
    import com.taomee.seer2.core.net.MessageEvent;
    import com.taomee.seer2.core.scene.events.ModelLocator;
-   import com.taomee.seer2.module.app.versionOnePetBagPanel.PetBagPanel;
+import com.taomee.seer2.core.utils.DisplayObjectUtil;
+import com.taomee.seer2.module.app.versionOnePetBagPanel.PetBagPanel;
    import com.taomee.seer2.module.app.versionOnePetBagPanel.PetInfoPanel;
    import flash.display.MovieClip;
    import flash.display.SimpleButton;
@@ -130,19 +131,13 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
          this._newQuestMC5 = this._guideUI["newQuestMC5"];
          this._newQuestMC6 = this._guideUI["newQuestMC6"];
          this._newQuestMC7 = this._guideUI["newQuestMC7"];
-         this._newQuestMC2.visible = false;
-         this._newQuestMC3.visible = false;
-         this._newQuestMC4.visible = false;
-         this._newQuestMC5.visible = false;
-         this._newQuestMC6.visible = false;
-         this._newQuestMC7.visible = false;
+         this.hideAllMC();
          this._curSelectType = 0;
          this._coinSelect.gotoAndStop(2);
          this._actionSurePos = new Point(this._actionSure.x,this._actionSure.y);
       }
       
-      private function initEvent() : void
-      {
+      private function initEvent() : void {
          this._onClose.addEventListener("click",this.onCloseBtn);
          this._coinSelect.addEventListener("click",this.onCoinSelect);
          this._miSelect.addEventListener("click",this.onMiSelect);
@@ -153,41 +148,38 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
          this._actionCancel.addEventListener("click",this.onActionCancel);
       }
       
-      private function onActionSure(evt:MouseEvent) : void
-      {
+      private function onActionSure(evt:MouseEvent) : void {
          this.updatePetInfoProp();
          this._actcionUI.visible = false;
          this._sure.visible = true;
-         if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83))
-         {
+         if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83)) {
             this.hideAllMC();
+            this.addChild(this._guideUI);
             this._newQuestMC7.visible = true;
             this._newQuestMC7.addEventListener("click",this.onNewQuestMC7);
          }
-         if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5))
-         {
+         if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5)) {
             this.hideAllMC();
+            this.addChild(this._guideUI);
             this._newQuestMC7.visible = true;
             this._newQuestMC7.addEventListener("click",this.onNewQuestMC8);
          }
       }
       
-      private function onNewQuestMC7(event:MouseEvent) : void
-      {
+      private function onNewQuestMC7(event:MouseEvent) : void {
          this.hideAllMC();
          QuestMapHandler_83_80351.quest8IsOk = true;
          ModuleManager.closeForName("PetBagPanel");
       }
       
-      private function onNewQuestMC8(evt:MouseEvent) : void
-      {
+      private function onNewQuestMC8(evt:MouseEvent) : void {
          this.hideAllMC();
          ModelLocator.getInstance().dispatchEvent(new LogicEvent("newGuideBroad5"));
          ModuleManager.closeForName("PetBagPanel");
       }
       
-      private function hideAllMC() : void
-      {
+      private function hideAllMC() : void {
+         DisplayObjectUtil.removeFromParent(this._guideUI);
          this._newQuestMC2.visible = false;
          this._newQuestMC3.visible = false;
          this._newQuestMC4.visible = false;
@@ -196,18 +188,15 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
          this._newQuestMC7.visible = false;
       }
       
-      private function onActionCancel(evt:MouseEvent) : void
-      {
-         this.changeQualitySendServer(2,this._petInfo.catchTime,function(data:IDataInput):void
-         {
+      private function onActionCancel(evt:MouseEvent) : void {
+         this.changeQualitySendServer(2,this._petInfo.catchTime,function(data:IDataInput):void {
             _actcionUI.visible = false;
             _sure.visible = true;
             setData(_petInfo);
          });
       }
       
-      private function onSwapItem(evt:MouseEvent) : void
-      {
+      private function onSwapItem(evt:MouseEvent) : void {
          ModuleManager.showAppModule("QualityItemRecoveryPanel");
       }
       
@@ -394,12 +383,14 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
             this._curSelectType = 0;
             if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83)) {
                this.hideAllMC();
+               this.addChild(this._guideUI);
                if(int(this._allProp.text) < this.COST_NUM[2]) {
                   this._newQuestMC4.visible = true;
                }
             }
             if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5)) {
                this.hideAllMC();
+               this.addChild(this._guideUI);
                if(int(this._allProp.text) < this.COST_NUM[2]) {
                   this._newQuestMC4.visible = true;
                }
@@ -441,33 +432,31 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
          this.updateNewQuest();
       }
       
-      private function updateNewQuest() : void
-      {
+      private function updateNewQuest() : void {
          this.hideAllMC();
-         if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83))
-         {
+         if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83)) {
+            this.addChild(this._guideUI);
             this._newQuestMC2.visible = true;
             this._newQuestMC2.addEventListener("click",this.onQuestMC2);
          }
-         if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5))
-         {
+         if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5)) {
+            this.addChild(this._guideUI);
             this._newQuestMC2.visible = true;
             this._newQuestMC2.addEventListener("click",this.onQuestMC2);
          }
       }
       
-      private function onQuestMC2(event:MouseEvent) : void
-      {
+      private function onQuestMC2(event:MouseEvent) : void {
          this.hideAllMC();
+         this.addChild(this._guideUI);
          this._newQuestMC3.addEventListener("click",this.onQuest3);
          this._newQuestMC3.visible = true;
       }
       
-      private function onQuest3(event:MouseEvent) : void
-      {
+      private function onQuest3(event:MouseEvent) : void {
          this.hideAllMC();
-         if(int(this._allProp.text) < this.COST_NUM[2])
-         {
+         this.addChild(this._guideUI);
+         if(int(this._allProp.text) < this.COST_NUM[2]) {
             this._newQuestMC4.visible = true;
          }
       }
@@ -510,10 +499,12 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
          update();
          if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83)) {
             hideAllMC();
+            this.addChild(this._guideUI);
             _newQuestMC6.visible = true;
          }
          if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5)) {
             hideAllMC();
+            this.addChild(this._guideUI);
             _newQuestMC6.visible = true;
          }
       }

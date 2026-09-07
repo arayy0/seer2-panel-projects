@@ -402,41 +402,38 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
          this.newGuideShow();
       }
       
-      private function newGuideShow() : void
-      {
+      private function newGuideShow() : void {
          var rect:Rectangle = null;
-         if(Boolean(QuestManager.isAccepted(99)) && !QuestManager.isStepComplete(99,6) && Boolean(QuestMapHandler_99_80491.isClickQuest99_6))
-         {
+         if(Boolean(QuestManager.isAccepted(99)) && !QuestManager.isStepComplete(99,6) && Boolean(QuestMapHandler_99_80491.isClickQuest99_6)) {
+            var r:Rectangle = this._setBtn.getBounds(stage);
             GuideManager.instance.close();
             rect = new Rectangle(0,0,73,31);
             GuideManager.instance.addTarget(rect,0);
-            GuideManager.instance.addGuide2Target(rect,0,25,new Point(924,479),false,false,9,false,true,false,990,560);
+            GuideManager.instance.addGuide2Target(rect,0,25,new Point(r.x,r.y),false,false,9,false,true,false,990,560);
             GuideManager.instance.startGuide(25);
          }
       }
       
-      private function onGuideNext1() : void
-      {
+      private function onGuideNext1() : void {
          var rect:Rectangle = null;
-         if(Boolean(QuestManager.isAccepted(99)) && !QuestManager.isStepComplete(99,6) && Boolean(QuestMapHandler_99_80491.isClickQuest99_6))
-         {
+         if(Boolean(QuestManager.isAccepted(99)) && !QuestManager.isStepComplete(99,6) && Boolean(QuestMapHandler_99_80491.isClickQuest99_6)) {
+            var r:Rectangle = this._addBtnList[0].getBounds(stage);
             GuideManager.instance.pause();
             rect = new Rectangle(0,0,24,24);
             GuideManager.instance.addTarget(rect,0);
-            GuideManager.instance.addGuide2Target(rect,0,23,new Point(973,325),false,false,9,false,true,false,990,560);
+            GuideManager.instance.addGuide2Target(rect,0,23,new Point(r.x,r.y),false,false,9,false,true,false,990,560);
             GuideManager.instance.startGuide(23);
          }
       }
       
-      private function onGuideNext2() : void
-      {
+      private function onGuideNext2() : void {
          var rect:Rectangle = null;
-         if(Boolean(QuestManager.isAccepted(99)) && !QuestManager.isStepComplete(99,6) && Boolean(QuestMapHandler_99_80491.isClickQuest99_6))
-         {
+         if(Boolean(QuestManager.isAccepted(99)) && !QuestManager.isStepComplete(99,6) && Boolean(QuestMapHandler_99_80491.isClickQuest99_6)) {
+            var r:Rectangle = this._sureBtn.getBounds(stage);
             GuideManager.instance.pause();
             rect = new Rectangle(0,0,73,31);
             GuideManager.instance.addTarget(rect,0);
-            GuideManager.instance.addGuide2Target(rect,0,24,new Point(924,479),false,false,9,false,true,false,990,560);
+            GuideManager.instance.addGuide2Target(rect,0,24,new Point(r.x,r.y),false,false,9,false,true,false,990,560);
             GuideManager.instance.startGuide(24);
          }
       }

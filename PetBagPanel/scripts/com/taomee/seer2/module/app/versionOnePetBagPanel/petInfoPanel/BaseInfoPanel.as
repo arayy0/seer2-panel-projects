@@ -18,7 +18,8 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
    import com.taomee.seer2.core.module.ModuleManager;
    import com.taomee.seer2.core.scene.events.ModelLocator;
    import com.taomee.seer2.core.ui.toolTip.TooltipManager;
-   import com.taomee.seer2.module.app.moduleCommon.PetDecorationIcon;
+import com.taomee.seer2.core.utils.DisplayObjectUtil;
+import com.taomee.seer2.module.app.moduleCommon.PetDecorationIcon;
    import com.taomee.seer2.module.app.moduleCommon.PetEmblemIcon;
    import com.taomee.seer2.module.app.versionOnePetBagPanel.PetInfoPanel;
    import flash.display.MovieClip;
@@ -123,22 +124,21 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
       private function onGetGuide(evt:LogicEvent) : void {
          this._newQuestMC2.visible = false;
          if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,5)) && !QuestManager.isStepComplete(99,6) && Boolean(QuestMapHandler_99_80491.isClickQuest99_6)) {
+            this.addChild(this._guideUI);
             this._newQuestMC2.visible = true;
          }
       }
       
-      private function onFuncUp(evt:MouseEvent) : void
-      {
+      private function onFuncUp(evt:MouseEvent) : void {
          var index:int = this._funcUpList.indexOf(evt.currentTarget as SimpleButton);
-         switch(index)
-         {
+         switch(index) {
             case 0:
                ModuleManager.showAppModule("PetDeityEvilSelectPanel");
-               StatisticsManager.sendNovice("0x1003384A");
+               //StatisticsManager.sendNovice("0x1003384A");
                break;
             case 1:
                ModuleManager.showAppModule("PetCharaPracticePanel",this._petInfo);
-               StatisticsManager.sendNovice("0x1003384B");
+               //StatisticsManager.sendNovice("0x1003384B");
                break;
             case 2:
                this.medalBuyHandle();
@@ -158,27 +158,22 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
          }
       }
       
-      private function medalBuyHandle() : void
-      {
-         if(this._petInfo == null)
-         {
+      private function medalBuyHandle() : void {
+         if(this._petInfo == null) {
             AlertManager.showAlert("精灵信息不存在");
             return;
          }
          var emblemId:uint = uint(this._petInfo.getPetDefinition().emblemId);
-         if(emblemId == 0)
-         {
+         if(emblemId == 0) {
             AlertManager.showAlert("该精灵无专属纹章");
             return;
          }
-         if(!Boolean(ItemConfig.getEmblemDefinition(this._petInfo.getPetDefinition().emblemId)))
-         {
+         if(!Boolean(ItemConfig.getEmblemDefinition(this._petInfo.getPetDefinition().emblemId))) {
             AlertManager.showAlert("该精灵无专属纹章");
             return;
          }
          var miBuyId:uint = uint(ItemConfig.getEmblemDefinition(emblemId).miBuyID);
-         if(miBuyId == 0)
-         {
+         if(miBuyId == 0) {
             AlertManager.showAlert("该纹章暂不出售");
             return;
          }
@@ -188,16 +183,18 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
       public function setData(info:PetInfo) : void {
          this.reset();
          this._petInfo = info;
-         if(this._petInfo != null)
-         {
+         if(this._petInfo != null) {
             this.updateDisplay();
          }
+         DisplayObjectUtil.removeFromParent(this._guideUI);
          this._newQuestMC1.visible = false;
          if(Boolean(QuestManager.isAccepted(83)) && Boolean(QuestManager.isStepComplete(83,8)) && !QuestManager.isStepComplete(83,9) && Boolean(QuestMapHandler_83_80351.isClickQuest83)) {
             this._newQuestMC1.visible = true;
+            this.addChild(this._guideUI);
          }
          if(Boolean(QuestManager.isAccepted(99)) && Boolean(QuestManager.isStepComplete(99,4)) && !QuestManager.isStepComplete(99,5) && Boolean(QuestMapHandler_99_80491.isClickQuest99_5)) {
             this._newQuestMC1.visible = true;
+            this.addChild(this._guideUI);
          }
          StarMagicManager.getPetStar(this._petInfo.catchTime,this.onShowStarNum,this.onShowStarNum);
       }

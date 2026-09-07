@@ -35,50 +35,39 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel {
          this._setQualityPanel = new SetQualityPanel(this,this._petBagPanel);
       }
       
-      public function setData(info:PetInfo) : void
-      {
+      public function setData(info:PetInfo) : void {
          this._petInfo = info;
-         if(Boolean(this._curPanel))
-         {
+         if(Boolean(this._curPanel)) {
             Object(this._curPanel).setData(this._petInfo);
          }
       }
       
-      public function changePanelShow(type:int) : void
-      {
-         if(Boolean(this._curPanel))
-         {
+      public function changePanelShow(type:int) : void {
+         if(Boolean(this._curPanel)) {
             DisplayObjectUtil.removeFromParent(this._curPanel);
             this._curPanel = null;
          }
-         if(type == 3)
-         {
-            this._curPanel = this._baseInfoPanel;
-            ModuleManager.showAppModule("GotExpPanel");
-         }
-         else if(type == 4)
-         {
-            this._curPanel = this._baseInfoPanel;
-            ModuleManager.showAppModule("GotAttributePanel",this._petInfo);
-         }
-         else
-         {
-            switch(type)
-            {
-               case 0:
-                  this._curPanel = this._baseInfoPanel;
-                  break;
-               case 1:
-                  this._curPanel = this._setPotentionPanel;
-                  break;
-               case 2:
-                  StatisticsManager.newSendNovice("2014系统","洗练","洗练面板进入");
-                  this._curPanel = this._setQualityPanel;
+         switch(type) {
+            case 0:
+               this._curPanel = this._baseInfoPanel;
+               break;
+            case 1:
+               this._curPanel = this._setPotentionPanel;
+               break;
+            case 2:
+               this._curPanel = this._setQualityPanel;
+               break;
+            case 3:
+               this._curPanel = this._baseInfoPanel;
+               ModuleManager.showAppModule("GotExpPanel");
+               break;
+            case 4:
+               this._curPanel = this._baseInfoPanel;
+               ModuleManager.showAppModule("GotAttributePanel",this._petInfo);
+               break;
             }
-         }
-         addChild(this._curPanel);
-         if(this._petInfo != null)
-         {
+         this.addChild(this._curPanel);
+         if(this._petInfo != null) {
             Object(this._curPanel).setData(this._petInfo);
          }
       }

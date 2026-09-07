@@ -81,8 +81,6 @@ import flash.utils.IDataInput;
          this._petListPanel.y = 40;
          this._petTabPanel = new PetTabPanel(this);
          this.addChild(this._petTabPanel);
-         this._petTabPanel.x = 0;
-         this._petTabPanel.y = 0;
          this._dataService = new PetBagDataService();
       }
       
