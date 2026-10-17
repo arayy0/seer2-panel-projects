@@ -1,8 +1,8 @@
-package
-{
-   import flash.display.MovieClip;
-   
-   [Embed(source="/_assets/assets.swf", symbol="HideSkillAlertUI")]
+package {
+import flash.display.MovieClip;
+import flash.display.SimpleButton;
+
+[Embed(source="/_assets/assets.swf", symbol="HideSkillAlertUI")]
    public dynamic class HideSkillAlertUI extends MovieClip
    {
        
@@ -11,7 +11,7 @@ package
       
       public var buyOneBtn:MovieClip;
       
-      public var closeBtn:MovieClip;
+      public var closeBtn:SimpleButton;
       
       public function HideSkillAlertUI()
       {

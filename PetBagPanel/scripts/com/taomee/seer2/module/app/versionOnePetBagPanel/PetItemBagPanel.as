@@ -223,7 +223,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel {
                this.useNum = 1;
                this.usePetItem(this.petItem);
                if (this._firstUse17Item) {
-                  AlertManager.showAlert("精灵背包中直接使用复活药剂无效果, 但仍会消耗药剂");
+                  AlertManager.showAlert("精灵背包中可以直接使用复活药剂, 无效果, 但仍会消耗药剂, 使用后刷新游戏即可看到药剂数量变化");
                   this._firstUse17Item = false;
                }
             }

@@ -1,5 +1,4 @@
-package com.taomee.seer2.module.app.petStorage.data
-{
+package com.taomee.seer2.module.app.petStorage.data {
    import com.taomee.seer2.app.config.PetRideShopConfig;
    import com.taomee.seer2.app.home.data.TrainingPetInfo;
    import com.taomee.seer2.app.net.CommandSet;
@@ -14,114 +13,85 @@ package com.taomee.seer2.module.app.petStorage.data
    import flash.events.EventDispatcher;
    import flash.utils.ByteArray;
    
-   public class PetStorageDataService extends EventDispatcher
-   {
-      
+   public class PetStorageDataService extends EventDispatcher {
       private static const SET_FREE_FLAG:int = 1;
-      
       private static const PUT_TO_BAG_FLAG:int = 1;
-       
-      
       private var _storageInfoVec:Vector.<PetInfo>;
-      
       private var _freeInfoVec:Vector.<PetInfo>;
-      
       private var _currentInfoVec:Vector.<PetInfo>;
-      
       private var _currentQuery:PetStorageQuery;
-      
       private var _currentCallBack:Function;
-      
       private var _includeBagPet:Boolean;
-      
       private var _customFilter:Function;
       
-      public function PetStorageDataService()
-      {
+      public function PetStorageDataService() {
          super();
       }
       
-      public function set includeBagPet(value:Boolean) : void
-      {
+      public function set includeBagPet(value:Boolean) : void {
          this._includeBagPet = value;
       }
       
-      public function setCustomFilter(func:Function) : void
-      {
+      public function setCustomFilter(func:Function) : void {
          this._customFilter = func;
       }
       
-      public function queryPetList(query:PetStorageQuery, callBack:Function) : void
-      {
+      public function queryPetList(query:PetStorageQuery, callBack:Function) : void {
          this._currentQuery = query;
          this._currentCallBack = callBack;
-         if(query.dataType == 0)
-         {
+         if(query.dataType == 0) {
             this.queryStoragePetList();
          }
-         else
-         {
+         else {
             this.queryFreePetList();
          }
       }
       
-      private function queryStoragePetList() : void
-      {
+      private function queryStoragePetList() : void {
          var i:int = 0;
-         if(this._storageInfoVec == null)
-         {
+         if(this._storageInfoVec == null) {
             this._storageInfoVec = new Vector.<PetInfo>();
-            if(this._includeBagPet)
-            {
-               for(i = 0; i < PetInfoManager.getTotalBagPetInfo().length; )
-               {
+            if(this._includeBagPet) {
+               for(i = 0; i < PetInfoManager.getTotalBagPetInfo().length; ) {
                   this._storageInfoVec.push(PetInfoManager.getTotalBagPetInfo()[i]);
                   i++;
                }
             }
             PetInfoManager.getStoragePetInfos(this.onGetStorageList,true);
          }
-         else
-         {
+         else {
             this.processQuery();
          }
       }
       
-      private function onGetStorageList(petInfos:Vector.<PetInfo>) : void
-      {
+      private function onGetStorageList(petInfos:Vector.<PetInfo>) : void {
          var i:* = 0;
          var len:uint = petInfos.length;
-         for(i = 0; i < len; )
-         {
+         for(i = 0; i < len; ) {
             this._storageInfoVec.push(petInfos[i]);
             i++;
          }
          this.processQuery();
       }
       
-      private function queryFreePetList() : void
-      {
-         if(this._freeInfoVec == null)
-         {
+      private function queryFreePetList() : void {
+         if(this._freeInfoVec == null) {
             Connection.addCommandListener(CommandSet.PET_GET_FREE_LIST_1022,this.onGetFreeList);
             Connection.send(CommandSet.PET_GET_FREE_LIST_1022);
          }
-         else
-         {
+         else {
             this.processQuery();
          }
       }
       
-      private function onGetFreeList(event:MessageEvent) : void
-      {
+      private function onGetFreeList(event:MessageEvent) : void {
          var i:int = 0;
          var info:PetInfo = null;
          Connection.removeCommandListener(CommandSet.PET_GET_FREE_LIST_1022,this.onGetFreeList);
          var data:LittleEndianByteArray = event.message.getRawData();
          var count:int = int(data.readUnsignedInt());
          this._freeInfoVec = new Vector.<PetInfo>();
-         for(i = 0; i < count; )
-         {
+         for(i = 0; i < count; ) {
             info = new PetInfo();
             PetInfo.readBaseSimpleInfo(info,data);
             PetInfo.readFreeTime(info,data);
@@ -253,9 +223,12 @@ package com.taomee.seer2.module.app.petStorage.data
                break;
             case 3:
                this.sortTreasureTime();
+               break;
+            case 4:
+               this._currentInfoVec.sort(this.sortByPetId);
+               break;
          }
-         if(this._currentQuery.sortType != 3 && this._currentQuery.isAscending == false)
-         {
+         if(this._currentQuery.sortType != 3 && !this._currentQuery.isAscending) {
             this._currentInfoVec.reverse();
          }
       }
@@ -318,6 +291,16 @@ package com.taomee.seer2.module.app.petStorage.data
          untreasuredVec.sort(this.sortByCatchTime);
          untreasuredVec.reverse();
          this._currentInfoVec = treasuredVec.concat(untreasuredVec);
+      }
+
+      private function sortByPetId(a:PetInfo, b:PetInfo) : int {
+         if(a.resourceId > b.resourceId) {
+            return -1;
+         }
+         if(a.resourceId < b.resourceId) {
+            return 1;
+         }
+         return 0;
       }
       
       private function handlerCallBack() : void
@@ -522,6 +505,14 @@ package com.taomee.seer2.module.app.petStorage.data
       {
          this.processQuery();
          dispatchEvent(new PetStorageEvent("petStorageDataChange"));
+      }
+
+      public function resetPetVecData() : void {
+         this._storageInfoVec = null;
+         this._freeInfoVec = null;
+         this._currentInfoVec = null;
+         PetStorageTreasureHelper.clear();
+         PetStorageTreasureHelper.reset(this);
       }
    }
 }

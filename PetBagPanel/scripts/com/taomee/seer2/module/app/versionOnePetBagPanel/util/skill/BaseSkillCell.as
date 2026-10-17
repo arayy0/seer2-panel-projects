@@ -90,6 +90,12 @@ import flash.display.MovieClip;
          this.reset();
          this._skillInfo = info;
          this._hasLearnSkill = hasLearnSkill;
+         if (this._hasLearnSkill) {
+            this.openInteraction();
+         }
+         else {
+            this.closeInteraction();
+         }
          if(this._skillInfo != null) {
             this._isHide = this._skillInfo.isHideSkill;
             this.updateDisplay();

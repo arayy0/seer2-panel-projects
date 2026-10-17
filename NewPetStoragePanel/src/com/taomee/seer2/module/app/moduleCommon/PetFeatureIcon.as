@@ -48,7 +48,12 @@ package com.taomee.seer2.module.app.moduleCommon
             this._featureIcon.buttonMode = true;
          }
          this._featureIcon.setIconUrl(URLUtil.getFeatureIcon(id));
-         TooltipManager.changeTip(this._featureIcon,tip);
+         if (tip) {
+            TooltipManager.changeTip(this._featureIcon,tip);
+         }
+         else {
+            TooltipManager.changeTip(this._featureIcon,"");
+         }
       }
    }
 }

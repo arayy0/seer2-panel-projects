@@ -15,6 +15,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petInfoPanel {
    import com.taomee.seer2.core.module.ModuleManager;
    import com.taomee.seer2.core.net.MessageEvent;
    import com.taomee.seer2.core.scene.events.ModelLocator;
+import com.taomee.seer2.core.ui.toolTip.TooltipManager;
 import com.taomee.seer2.core.utils.DisplayObjectUtil;
 import com.taomee.seer2.module.app.versionOnePetBagPanel.PetBagPanel;
    import com.taomee.seer2.module.app.versionOnePetBagPanel.PetInfoPanel;
@@ -72,6 +73,7 @@ import com.taomee.seer2.module.app.versionOnePetBagPanel.PetBagPanel;
       private var _failHandler:Function;
       private var _guideUI:MovieClip;
       private var _superTime:int = 0;
+      private var _oldQuality:MovieClip;
       
       public function SetQualityPanel(thisParent:PetInfoPanel, petBagPanel:PetBagPanel) {
          super();
@@ -125,6 +127,8 @@ import com.taomee.seer2.module.app.versionOnePetBagPanel.PetBagPanel;
          this._actcionUI.visible = false;
          this._actionSure = this._actcionUI["actionSure"];
          this._actionCancel = this._actcionUI["actionCancel"];
+         this._oldQuality = this._mainUI["oldQuality"];
+         TooltipManager.addCommonTip(this._oldQuality,"旧资质系统, 仅在新资质系统数值为0时生效. 仅有少量精灵特性/技能使用该数值.");
          this._newQuestMC2 = this._guideUI["newQuestMC2"];
          this._newQuestMC3 = this._guideUI["newQuestMC3"];
          this._newQuestMC4 = this._guideUI["newQuestMC4"];

@@ -1,41 +1,39 @@
-package com.taomee.seer2.module.app.newPetStorage.view
-{
+package com.taomee.seer2.module.app.newPetStorage.view {
    import com.taomee.seer2.app.pet.data.PetInfo;
    import flash.utils.IDataInput;
    
-   public class NewParser_1017
-   {
-       
-      
+   public class NewParser_1017 {
+      private var data:IDataInput;
       public var petInfo:PetInfo;
       
-      public function NewParser_1017(param1:IDataInput, param2:PetInfo = null)
-      {
+      public function NewParser_1017(param1:IDataInput) {
          super();
-         if(param2 != null)
-         {
-            this.petInfo = param2;
+         this.data = param1;
+         this.petInfo = new PetInfo();
+         this.petInfo.catchTime = param1.readUnsignedInt();
+      }
+
+      public function readData(param:PetInfo = null) : void {
+         var targetInfo:PetInfo = this.petInfo;
+         if (param != null) {
+            targetInfo = param;
          }
-         else
-         {
-            this.petInfo = new PetInfo();
-         }
-         PetInfo.readBaseInfo(this.petInfo,param1);
-         PetInfo.readDetailInfo(this.petInfo,param1);
-         this.petInfo.learningInfo.pointUnused = param1.readUnsignedShort();
-         this.petInfo.learningInfo.pointHp = param1.readUnsignedShort();
-         this.petInfo.learningInfo.pointAtk = param1.readUnsignedShort();
-         this.petInfo.learningInfo.pointSpecialAtk = param1.readUnsignedShort();
-         this.petInfo.learningInfo.pointDefence = param1.readUnsignedShort();
-         this.petInfo.learningInfo.pointSpecialDefence = param1.readUnsignedShort();
-         this.petInfo.learningInfo.pointSpeed = param1.readUnsignedShort();
-         param1.readUnsignedInt();
-         this.petInfo.potentialAtk = param1.readUnsignedInt();
-         this.petInfo.potentialDef = param1.readUnsignedInt();
-         this.petInfo.potentialSpAtk = param1.readUnsignedInt();
-         this.petInfo.potentialSpDef = param1.readUnsignedInt();
-         this.petInfo.potentialSpeed = param1.readUnsignedInt();
-         this.petInfo.potentialHp = param1.readUnsignedInt();
+         PetInfo.readBaseBaseInfo(targetInfo,this.data);
+         PetInfo.readDetailInfo(targetInfo,this.data);
+         targetInfo.learningInfo.pointUnused = this.data.readUnsignedShort();
+         targetInfo.learningInfo.pointHp = this.data.readUnsignedShort();
+         targetInfo.learningInfo.pointAtk = this.data.readUnsignedShort();
+         targetInfo.learningInfo.pointSpecialAtk = this.data.readUnsignedShort();
+         targetInfo.learningInfo.pointDefence = this.data.readUnsignedShort();
+         targetInfo.learningInfo.pointSpecialDefence = this.data.readUnsignedShort();
+         targetInfo.learningInfo.pointSpeed = this.data.readUnsignedShort();
+         this.data.readUnsignedInt();
+         targetInfo.potentialAtk = this.data.readUnsignedInt();
+         targetInfo.potentialDef = this.data.readUnsignedInt();
+         targetInfo.potentialSpAtk = this.data.readUnsignedInt();
+         targetInfo.potentialSpDef = this.data.readUnsignedInt();
+         targetInfo.potentialSpeed = this.data.readUnsignedInt();
+         targetInfo.potentialHp = this.data.readUnsignedInt();
       }
    }
 }

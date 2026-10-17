@@ -11,31 +11,27 @@ package com.taomee.seer2.module.app {
    import flash.events.MouseEvent;
    
    public class NewPetStoragePanel extends Module {
-
       private var _moduleData:StorageData;
-      
       private var _subPanels:Array;
       
-      public function NewPetStoragePanel()
-      {
+      public function NewPetStoragePanel() {
          this._subPanels = [];
          super();
-         _lifecycleType = LifecycleType.GLOBAL;
+         this._lifecycleType = LifecycleType.GLOBAL;
          this._moduleData = new StorageData();
       }
 
       override public function setup():void{
-         setMainUI(new NewPetStorageUI());
+         this.setMainUI(new NewPetStorageUI());
          this.initSet();
          this.initEvent();
       }
       
-      private function initSet() : void
-      {
-         this._subPanels.push(new BagPets(_mainUI["bagPets"]));
-         this._subPanels.push(new PetInfoPanel(_mainUI["petInfo"]));
-         this._subPanels.push(new StorageMainPanel(_mainUI["storage"]));
-         this.moduleData.setData("focus_pet",PetInfoManager.getFirstPetInfo());
+      private function initSet() : void {
+         this._subPanels.push(new BagPets(this._mainUI["bagPets"]));
+         this._subPanels.push(new PetInfoPanel(this._mainUI["petInfo"]));
+         this._subPanels.push(new StorageMainPanel(this._mainUI["storage"]));
+         this._moduleData.setData("focus_pet",PetInfoManager.getFirstPetInfo());
       }
 
       private function initEvent():void{
@@ -43,40 +39,38 @@ package com.taomee.seer2.module.app {
          this._mainUI["oldPetStorageBtn"].addEventListener("click",this.onPanelClick);
       }
       
-      private function onPanelClick(e:MouseEvent) : void
-      {
-         switch(e.target.name)
-         {
+      private function onPanelClick(e:MouseEvent) : void {
+         switch(e.target.name) {
             case "petBagBtn":
-               onClose(null);
+               this.onClose(null);
                ModuleManager.showAppModule("PetBagPanel");
                break;
             case "oldPetStorageBtn":
-               onClose(null);
+               this.onClose(null);
                ServerBufferManager.updateServerBuffer(461,8,0);
                ModuleManager.showAppModule("PetStoragePanel");
          }
       }
       
-      public function get moduleData() : StorageData
-      {
+      public function get moduleData() : StorageData {
          return this._moduleData;
       }
       
-      override public function dispose() : void
-      {
+      override public function dispose() : void {
          this._moduleData.destory();
          super.dispose();
       }
 
       override public function show() : void {
          super.show();
-         this._moduleData = new StorageData();
+         this.moduleData.resetDataService();
          this._moduleData.setData("focus_pet",PetInfoManager.getFirstPetInfo());
+         for (var i:int = 0; i < this._subPanels.length; ++i) {
+            this._subPanels[i].update();
+         }
       }
 
       override public function hide() : void {
-         this._moduleData.destory();
          super.hide();
       }
    }

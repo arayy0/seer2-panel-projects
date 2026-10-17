@@ -45,6 +45,10 @@ package com.taomee.seer2.module.app.newPetStorage.view
          }
          this._subPanels.push(subPanel);
       }
+
+      public function update() : void {
+
+      }
       
       public function destory() : void
       {

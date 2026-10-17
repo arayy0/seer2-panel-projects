@@ -1,85 +1,64 @@
-package com.taomee.seer2.module.app.newPetStorage.view.storage
-{
-   import com.taomee.seer2.app.pet.data.PetInfo;
+package com.taomee.seer2.module.app.newPetStorage.view.storage {
+import com.taomee.seer2.app.pet.data.PetInfo;
 import com.taomee.seer2.core.ui.toolTip.TooltipManager;
 import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
-   import flash.display.DisplayObject;
-   import flash.display.MovieClip;
-   import flash.events.MouseEvent;
+import flash.display.DisplayObject;
+import flash.display.MovieClip;
+import flash.events.MouseEvent;
    
-   public class StorageMainPanel extends StorageSubView
-   {
-       
-      
+   public class StorageMainPanel extends StorageSubView {
       private const SORT_CONFIG:* = {
          "sortByTime":0,
-         "sortByLevel":2
+         "sortByLevel":2,
+         "sortById":4
       };
-      
-      private const PAGE_SIZE:int = 20;
-      
       private var _cellList:Array;
-      
       private var _currentPage:int = 0;
-      
       private var _petList:Vector.<PetInfo>;
-      
       private var _typeLimit:int = -1;
       
-      public function StorageMainPanel(ui:MovieClip)
-      {
+      public function StorageMainPanel(ui:MovieClip) {
          this._cellList = [];
          super(ui);
          this.init();
-         moduleData.listenTo("pet_list",function():void
-         {
+         moduleData.listenTo("pet_list",function():void {
             resetList();
          });
       }
       
-      private function init() : void
-      {
+      private function init() : void {
          var i:int;
          var petCell:PetCell = null;
-         for(i = 0; i < 20; )
-         {
+         for(i = 0; i < 20; ++i) {
             petCell = new PetCell(_ui["cell" + i],i);
             addSubPanel(petCell);
             this._cellList.push(petCell);
-            i++;
          }
          addSubPanel(new PetTypeIconsPanel(_ui["typeIcons"]));
-         for(i = 0; i < 6; )
-         {
+         for(i = 0; i < 6; ++i) {
             _ui["star_" + i].mouseChildren = false;
             _ui["star_" + i].buttonMode = true;
             _ui["star_" + i].gotoAndStop(1);
-            i++;
          }
-         this.resetList();
+         //this.resetList();
          eventListenerMgr.addEventListener(_ui,"click",this.onClick);
          _ui["sortMc"]["optionMc"].visible = false;
-         eventListenerMgr.addEventListener(_ui["sortMc"],"rollOver",function(e:*):void
-         {
+         eventListenerMgr.addEventListener(_ui["sortMc"],"rollOver",function(e:*):void {
             _ui["sortMc"]["optionMc"].visible = true;
          });
-         eventListenerMgr.addEventListener(_ui["sortMc"],"rollOut",function(e:*):void
-         {
+         eventListenerMgr.addEventListener(_ui["sortMc"],"rollOut",function(e:*):void {
             _ui["sortMc"]["optionMc"].visible = false;
          });
-         eventListenerMgr.addEventListener(_ui["search"],"focusIn",function(e:*):void
-         {
+         eventListenerMgr.addEventListener(_ui["search"],"focusIn",function(e:*):void {
             _ui["search"].text = "";
          });
-         eventListenerMgr.addEventListener(_ui["search"],"focusOut",function(e:*):void
-         {
+         eventListenerMgr.addEventListener(_ui["search"],"focusOut",function(e:*):void {
             if(_ui["search"].text == "")
             {
                _ui["search"].text = "搜索名字或ID";
             }
          });
-         moduleData.listenTo("query",function():void
-         {
+         moduleData.listenTo("query",function():void {
             _currentPage = 0;
             clearStarLimit();
             resetList();
@@ -87,15 +66,15 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
          TooltipManager.addCommonTip(this._ui["tips"],"持有精灵数量达到800时就可能会触发吞精灵的bug 请注意控制精灵数量");
       }
       
-      private function onClick(e:MouseEvent) : void
-      {
-         var btnName:String = null;
+      private function onClick(e:MouseEvent) : void {
+         var btnName:String;
          var targetType:int = 0;
+         var sortTxt:Array = ["序号", "等级", "时间"];
+         var sortTxtIndex:int = 0;
          var str:String = null;
          btnName = String(e.target.name);
          var index:int = parseInt(btnName.split("_")[1]);
-         switch(btnName)
-         {
+         switch(btnName) {
             case "freeBtn":
                moduleData.query.dataType = 1;
                moduleData.query.filterType = 3;
@@ -115,15 +94,17 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
                this.setPage(this._currentPage - 1);
                break;
             case "sortByTime":
+               sortTxtIndex += 1;
             case "sortByLevel":
+               sortTxtIndex += 1;
+            case "sortById":// 让它滑下来，排序部分需要复用代码，在最后通过index判断显示
+               _ui["sortMc"]["sortTxt"].text = sortTxt[sortTxtIndex];
                this._currentPage = 0;
-               if((targetType = int(this.SORT_CONFIG[btnName])) == moduleData.query.sortType)
-               {
+               if((targetType = int(this.SORT_CONFIG[btnName])) == moduleData.query.sortType) {
                   moduleData.query.isAscending = !moduleData.query.isAscending;
                }
                moduleData.query.sortType = targetType;
                this.resetList();
-               _ui["sortMc"]["sortTxt"].text = btnName == "sortByTime" ? "时间" : "等级";
                break;
             case "allBtn":
                this.clearStarLimit();
@@ -141,8 +122,7 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
             case "find":
                this.clearStarLimit();
                str = String(_ui["search"].text);
-               if(str == "")
-               {
+               if(str == "" || str == "搜索名字或ID") {
                   return;
                }
                if(parseInt(str) > 0)
@@ -161,34 +141,26 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
          }
       }
       
-      private function clearStarLimit() : void
-      {
-         var i:int = 0;
-         for(i = 0; i < 6; )
-         {
+      private function clearStarLimit() : void {
+         var i:int;
+         for(i = 0; i < 6; ++i) {
             _ui["star_" + i].gotoAndStop(1);
-            i++;
          }
       }
       
-      private function setStarLimit(limit:int) : void
-      {
+      private function setStarLimit(limit:int) : void {
          var i:int;
-         for(i = 0; i < 6; )
-         {
+         for(i = 0; i < 6; ) {
             _ui["star_" + i].gotoAndStop(1);
-            if(i <= limit)
-            {
+            if(i <= limit) {
                _ui["star_" + i].gotoAndStop(2);
             }
             i++;
          }
          moduleData.query.filterType = 4;
-         moduleData.listDataService.setCustomFilter(function(petInfo:PetInfo):Boolean
-         {
+         moduleData.listDataService.setCustomFilter(function(petInfo:PetInfo):Boolean {
             var result:* = petInfo.getPetDefinition().starLevel != limit + 1;
-            if(_typeLimit == -1)
-            {
+            if(_typeLimit == -1) {
                return result;
             }
             return result || petInfo.getPetDefinition().type != _typeLimit;
@@ -197,41 +169,36 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
          this.resetList();
       }
       
-      private function resetList() : void
-      {
+      private function resetList() : void {
          var btn:DisplayObject = moduleData.query.dataType == 1 ? _ui["freeBtn"] : _ui["storageBtn"];
          _ui["maskMc"].x = btn.x;
          _ui["maskMc"].y = btn.y;
-         if(moduleData.query.filterType != 1 && moduleData.query.filterType != 2)
-         {
+         if(moduleData.query.filterType != 1 && moduleData.query.filterType != 2) {
             _ui["search"].text = "搜索名字或ID";
          }
-         if(moduleData.query.filterType == 0)
-         {
+         var sortTxt:Array = ["时间", "等级", "序号"];
+         _ui["sortMc"]["sortTxt"].text = sortTxt[(moduleData.query.sortType / 2)]; // 因为这三个选项对应的sortType值为024，直接简单写了
+         if(moduleData.query.filterType == 0) {
             this.clearStarLimit();
             this._typeLimit = moduleData.query.filterContent;
          }
-         if(moduleData.query.filterType != 0 && moduleData.query.filterType != 4)
-         {
+         if(moduleData.query.filterType != 0 && moduleData.query.filterType != 4) {
+            this.clearStarLimit();
             this._typeLimit = -1;
          }
-         moduleData.listDataService.queryPetList(moduleData.query,function(list:Vector.<PetInfo>):void
-         {
+         moduleData.listDataService.queryPetList(moduleData.query,function(list:Vector.<PetInfo>):void {
             _petList = list;
             setPage(_currentPage);
-            if(moduleData.query.dataType == 0)
-            {
+            if(moduleData.query.dataType == 0) {
                _ui["totalCount"].text = String(moduleData.listDataService.storageLength) + "/2999";
             }
-            else
-            {
+            else {
                _ui["totalCount"].text = String(moduleData.listDataService.freeLength) + "/1000";
             }
          });
       }
       
-      private function setPage(page:int) : void
-      {
+      private function setPage(page:int) : void {
          var i:int = 0;
          var index:int = 0;
          var petCell:PetCell = null;
@@ -274,6 +241,10 @@ import com.taomee.seer2.module.app.newPetStorage.view.StorageSubView;
             result = 1;
          }
          return result;
+      }
+
+      override public function update() : void {
+         this.resetList();
       }
    }
 }

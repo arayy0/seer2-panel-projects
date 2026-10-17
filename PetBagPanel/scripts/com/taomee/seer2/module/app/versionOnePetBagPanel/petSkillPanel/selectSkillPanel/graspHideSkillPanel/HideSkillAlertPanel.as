@@ -1,6 +1,7 @@
 package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel.selectSkillPanel.graspHideSkillPanel
 {
-   import flash.display.Sprite;
+import flash.display.SimpleButton;
+import flash.display.Sprite;
    import flash.events.MouseEvent;
    
    public class HideSkillAlertPanel extends Sprite
@@ -9,7 +10,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel.selectSk
       
       private var ui:Sprite;
       
-      private var closeBtn:Sprite;
+      private var closeBtn:SimpleButton;
       
       private var buyOneBtn:Sprite;
       
@@ -29,7 +30,7 @@ package com.taomee.seer2.module.app.versionOnePetBagPanel.petSkillPanel.selectSk
          this.buyOneBtn = this.ui["buyOneBtn"];
          this.buyAllBtn = this.ui["buyAllBtn"];
          this.closeBtn = this.ui["closeBtn"];
-         this.buyOneBtn.buttonMode = this.buyAllBtn.buttonMode = this.closeBtn.buttonMode = true;
+         this.buyOneBtn.buttonMode = this.buyAllBtn.buttonMode = true;
          this.buyOneFunc = buyOneFunc;
          this.buyAllFunc = buyAllFunc;
          this.closeFunc = close;
