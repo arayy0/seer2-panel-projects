@@ -37,7 +37,8 @@ package com.taomee.seer2.module.app.newPetStorage.view.storage {
          this._icon.setIconUrl(url);
          _ui["levelBar"]["levelTxt"].text = petInfo.level + "";
          _ui.addChild(_ui["levelBar"]);
-         _ui["star"].visible = this._petInfo.hasStar;
+         //_ui["star"].visible = this._petInfo.hasStar;
+         _ui["star"].visible = false; // 作用不大，不缺星魂了，先取消这个功能
          _ui.addChild(_ui["star"]);
       }
       

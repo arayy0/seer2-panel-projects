@@ -1,6 +1,7 @@
 package com.taomee.seer2.module.app.newPetStorage.view {
 import com.taomee.seer2.app.component.PetDemoDisplayer;
 import com.taomee.seer2.app.component.PetTypeIcon;
+import com.taomee.seer2.app.config.ItemConfig;
 import com.taomee.seer2.app.config.PetConfig;
 import com.taomee.seer2.app.config.PetEvolveConfig;
 import com.taomee.seer2.app.config.info.PetEvolveStarInfo;
@@ -192,7 +193,10 @@ import flash.utils.setTimeout;
       
       private function updateView() : void {
          var shenmohua:Array = null;
-         if(this._ui == null) {
+         if(!this._ui) {
+            return;
+         }
+         if (!this._petInfo) {
             return;
          }
          this._ui["genderMc"].gotoAndStop(this._petInfo.sex + 1);
@@ -235,7 +239,7 @@ import flash.utils.setTimeout;
          this._typeIcon.type = this._petInfo.type;
          if(this._petInfo.emblemId == 0) {
             this._emblemIcon.visible = false;
-            this._ui["emblem"].visible = true;
+            this._ui["emblem"].visible = (this._petInfo.getPetDefinition().emblemId && ItemConfig.getEmblemDefinition(this._petInfo.getPetDefinition().emblemId));
          }
          else {
             this._emblemIcon.visible = true;
@@ -243,7 +247,7 @@ import flash.utils.setTimeout;
          }
          if(this._petInfo.decorationId == 0) {
             this._decorationIcon.visible = false;
-            this._ui["decoration"].visible = true;
+            this._ui["decoration"].visible = Boolean(this._petInfo.getPetDefinition().emblem2Id != 0);
          }
          else {
             this._decorationIcon.visible = true;
